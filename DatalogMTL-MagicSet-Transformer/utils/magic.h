@@ -2,6 +2,10 @@
 #define MAGIC_H
 #include<loader.h>
 
+void adornment(vector<Rule>& adornedRuleList,const Atom& query);
+vector<Rule> generation_RuleList(const vector<Rule>& adornedRuleList);
+vector<Rule> modification_RuleList(const vector<Rule>& adornedRuleList);
+
 vector<Rule> magic(vector<Rule> originalRuleList,const Atom& query) {
 	//TODO
 	vector<Rule> adornedRuleList = originalRuleList; // initialize adornedRuleList
@@ -21,10 +25,12 @@ void adornment(vector<Rule>& adornedRuleList,const Atom& query) {
 
 vector<Rule> generation_RuleList(const vector<Rule>& adornedRuleList) {
 	//TODO
+	return adornedRuleList;
 }
 
 vector<Rule> modification_RuleList(const vector<Rule>& adornedRuleList) {
 	//TODO
+	return adornedRuleList;
 }
 
 #endif
