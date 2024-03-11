@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LiteralUnion">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAIAAAAAgBAAAAAAAAAABIAAAAAAgAAAAAAA=</HashCode>
+      <FileName>utils\parser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Base">
+    <Position X="4" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAEAgAAAAQAA=</HashCode>
+      <FileName>classes\atom.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atom">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAJAQAAAAAABAAAAAAQSAAAABAAACAEAgEAAAAAA=</HashCode>
+      <FileName>classes\atom.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Interval">
+    <Position X="14.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABEQAgAEQAAAAQIACAwAAAAAAQQBCAEEgMAACQAA=</HashCode>
+      <FileName>classes\interval.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Operator">
+    <Position X="12.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQCAAAAEAAACAAAgEAAAIAA=</HashCode>
+      <FileName>classes\literal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Literal">
+    <Position X="6.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAIAQAAAAAAAABAAAAQAAAAABAAACAEAgEAAAAAA=</HashCode>
+      <FileName>classes\literal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BinaryLiteral" Collapsed="true">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAAAAAAAAAAAAAAEQAAAAIAAAACAEAoEAAAAAA=</HashCode>
+      <FileName>classes\literal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rule">
+    <Position X="8.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgEAAAAAAAAAAAAAAAQAAAAACAAAgAAAAAAA=</HashCode>
+      <FileName>classes\rule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Term">
+    <Position X="10.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQQAAAAAFAAACEEEgkAAAgAA=</HashCode>
+      <FileName>classes\term.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
