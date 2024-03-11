@@ -48,6 +48,9 @@
     <ClInclude Include="utils\util.h">
       <Filter>头文件\utils</Filter>
     </ClInclude>
+    <ClInclude Include="magic.h">
+      <Filter>头文件\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\atom.cpp">
@@ -68,5 +71,8 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

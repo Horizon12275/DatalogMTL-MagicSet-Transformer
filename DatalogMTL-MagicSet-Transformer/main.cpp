@@ -1,4 +1,4 @@
-#include<loader.h>
+#include<magic.h>
 #include<iostream>
 
 int main() {
