@@ -138,8 +138,8 @@
     <ClInclude Include="classes\literal.h" />
     <ClInclude Include="classes\rule.h" />
     <ClInclude Include="classes\term.h" />
-    <ClInclude Include="magic.h" />
     <ClInclude Include="utils\loader.h" />
+    <ClInclude Include="utils\magic.h" />
     <ClInclude Include="utils\parser.h" />
     <ClInclude Include="utils\util.h" />
   </ItemGroup>

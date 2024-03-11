@@ -48,7 +48,7 @@
     <ClInclude Include="utils\util.h">
       <Filter>头文件\utils</Filter>
     </ClInclude>
-    <ClInclude Include="magic.h">
+    <ClInclude Include="utils\magic.h">
       <Filter>头文件\utils</Filter>
     </ClInclude>
   </ItemGroup>
