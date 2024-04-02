@@ -274,7 +274,7 @@ Interval Interval::circle_add(Interval v1, Interval v2) {
 bool Interval::compare(vector<Interval> intervals1, vector<Interval> intervals2) {
     if (intervals1.size() != intervals2.size())
         return false;
-    int length = intervals1.size();
+    size_t length = intervals1.size();
     for (int i = 0; i < length; i ++) {
         if (!intervals1[i].__eq__(intervals2[i]))
             return false;

@@ -23,17 +23,12 @@ public:
     Operator& operator = (const Operator & other);
 };
 
-enum LiteralType {
-    IDB,
-    EDB
-};
+
 
 class Literal : public Base{
 public:
     Atom atom;
     vector<Operator> operators;
-    LiteralType type; // 枚举类型成员
-    vector<char> bflist; // 用于记录每个变量是否是bound变量或者是free变量
 
     Literal();
     Literal(Atom atom);
@@ -42,7 +37,7 @@ public:
     string get_predicate();
     vector<Term> get_entity();
     string get_op_name();
-    bool set_entity(vector<Term> entity);
+    bool set_entity(vector<Term> entity); 
     bool __eq__(Literal other);
     bool operator == (const Literal & other) const;
     string __str__();

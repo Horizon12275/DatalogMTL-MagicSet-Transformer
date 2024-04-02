@@ -342,7 +342,8 @@ vector<Rule> parse_rule(string original_rule) {
         } 
         else {
             //TODO: BinaryLiteral
-        
+            vector<Rule> rules;
+            return rules;
         }
     }
 }

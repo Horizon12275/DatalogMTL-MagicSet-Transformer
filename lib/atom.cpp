@@ -97,5 +97,8 @@ Atom& Atom::operator = (const Atom & other)  {
     this->entity = other.entity;
     this->interval = other.interval;
     this->Base::type = other.Base::type;
+    this->bflist = other.bflist;
+    this->bflist_size = other.bflist_size;
+    this->isMagic = other.isMagic;
     return *this;
 }

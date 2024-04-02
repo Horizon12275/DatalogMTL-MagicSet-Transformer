@@ -28,11 +28,23 @@ public:
     }
 };
 
+enum AtomType
+{
+    IDB,
+    EDB
+};
+
 class Atom : public Base {
 public:
     string predicate = "";
     vector<Term> entity = vector<Term>();
     Interval interval = Interval();
+
+    // 新增成员变量
+    AtomType type;    // 枚举类型成员，用于区分IDB和EDB
+    vector<char> bflist; // 用于按顺序记录每个变量是否是bound变量或者是free变量
+    int bflist_size;     // 用于记录bflist的大小，大小应和entity的大小相同
+    bool isMagic = false; // 用于标记是否是magic atom
 
     Atom() : Base(2) {};
     Atom(string predicate);
@@ -50,7 +62,7 @@ public:
     bool set_entity(vector<Term> entity);
 
     Atom(const Atom& other);
-    Atom& operator = (const Atom & other);
+    Atom& operator = (const Atom & other); // 重载赋值运算符，需注意修改
 };
 
 #endif
