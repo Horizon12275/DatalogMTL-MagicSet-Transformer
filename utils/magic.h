@@ -8,25 +8,41 @@
 
 class MagicSet {
 public:
+    Literal magicFact;
     stack<Literal> S;
-    set<Rule> adornedRules;
-    set<Rule> modifiedRules;
-    set<Rule> magicRules;
+    vector<Rule> adornedRules;
+    vector<Rule> modifiedRules;
+    vector<Rule> magicRules;
+    set<string> IDBList;
 
-    set<Rule> MS(Literal Q, vector<Rule> P) {
+    vector<Rule> MS(Literal Q, vector<Rule> P) {
         modifiedRules.clear();
-        magicRules = BuildQuerySeeds(Q, S);
+        adornedRules.clear();
+        magicRules.clear();
+        S = stack<Literal>();
+        BuildQuerySeeds(Q, S); // Build query seeds and generate magicFact
+        BuildIDBList(P); // Build IDB list
+        PrintIDBList();
 
+        // cout << "Query: " << Q.__str__() << endl;
+        // cout << "Query Seeds: " << endl;
         // while (!S.empty()) {
-        //     Literal pAlpha = S.top();
+        //     cout << S.top().__str__() << endl;
         //     S.pop();
-
-        //     for (Rule& r : P) {
-        //         if (r.head.get_predicate() == pAlpha.get_predicate()) {
-        //             //adornedRules.insert(Adorn(r, pAlpha, S));
-        //         }
-        //     }
         // }
+        // for (Rule& r : P) {
+        //     cout << "Rule: " << r.__str__() << endl;
+        // }
+
+        while (!S.empty()) {
+            Literal pAlpha = S.top();
+            S.pop();
+            for (Rule& r : P) {
+                if (r.head.get_predicate() == pAlpha.get_predicate()) {
+                    adornedRules.push_back(Adorn(r, pAlpha, S));
+                }
+            }
+        }
 
         // for (const Rule& ra : adornedRules) {
         //     //magicRules.insert(Generate(ra));
@@ -36,154 +52,175 @@ public:
         //     //modifiedRules.insert(Modify(ra));
         // }
 
+        // print results
+        printMagicFact();
+        printMagicRules();
+
         return magicRules;
     }
 
 private:
-    set<Rule> BuildQuerySeeds(Literal query, stack<Literal>& S) {
-        set<Rule> magicRules;
-
-        // // Adorn the query literal
-        // Literal adornedQuery = adornLiteral(query);
-        // S.push(adornedQuery);
-
-        // // Generate magic seed rule for the adorned query literal
-        // Rule magicSeedRule;
-        // magicSeedRule.head = adornedQuery;
-        // magicRules.insert(magicSeedRule);
-
-        return magicRules;
+    void BuildQuerySeeds(Literal query, stack<Literal>& S) {
+        // build query seeds
+        S.push(query);
+        // generate magic fact
+        // if the term in the query is a constant, then the corresponding char of bfList is b, which means bound variable
+        // if the term in the query is a variable, then the corresponding char of bfList is f, which means free variable
+        magicFact = query;
+        magicFact.atom.predicate = "magic_" + magicFact.atom.predicate + "_";
+        magicFact.atom.isMagic = true;
+        for (Term& term : magicFact.get_entity()) {
+            if (term.get_type() == "variable") {
+                magicFact.atom.bflist.push_back('f');
+                magicFact.atom.predicate += "f";
+            } else {
+                magicFact.atom.bflist.push_back('b');
+                magicFact.atom.predicate += "b";
+            }
+        }
+        //printMagicFact();
     }
 
-    // Function to adorn a literal with binding information
-    Literal adornLiteral(Literal literal) {
-        Literal adornedLiteral;
-        // adornedLiteral.atom = literal.atom;
-
-        // // Adorn each argument of the atom based on its type (constant or variable)
-        // for (size_t i = 0; i < literal.atom.entity.size(); ++i) {
-            
-        // }
-
-        return adornedLiteral;
-    }
-
-    set<Rule> Adorn(Rule r, Literal pAlpha, stack<Literal> &S)
+    Rule Adorn(Rule r, Literal pAlpha, stack<Literal> &S)
     {
-        set<Rule> adornedRules;
+        Rule adornedRule; // used to record the adorned rule
+        set<string> appearedTerms; // used to record the terms that have appeared in the adorned rule
 
-        // // Extract the head of the rule r
-        // Literal headLiteral = r.head;
+        // adorn the rule according to the bflist of pAlpha and by SIPS method
+        // if the term in the rule is a constant, then the corresponding char of bfList is b, which means bound variable
+        // if the term in the rule is a variable, then the corresponding char of bfList is f, which means free variable
 
-        // // Check if the headLiteral matches with the adorned predicate pAlpha
-        // if (headLiteral.atom.predicate == pAlpha.atom.predicate) {
-        //     // Adorn the arguments of the headLiteral based on the adornment of pAlpha
-        //     vector<Term> adornedEntity;
-        //     for (size_t i = 0; i < pAlpha.atom.entity.size(); ++i) {
-        //         Term term = pAlpha.atom.entity[i];
-        //         if (term.type == "variable") {
-        //             adornedEntity.push_back(term); // If it is a variable, keep it as it is
-        //         }
-        //         else {
-        //             adornedEntity.push_back(headLiteral.atom.entity[i]); // If it is a constant, match it with the headLiteral's argument
-        //         }
-        //     }
+        //intialize the adorned rule
+        adornedRule = r;
 
-        //     // Create a new adorned headLiteral with the adorned arguments
-        //     Literal adornedHeadLiteral = Literal(Atom(pAlpha.atom.predicate, adornedEntity));
+        //std::cout << "Rule: " << r.__str__() << std::endl;
 
-        //     // Create a new adorned rule with the adorned head and the same body
-        //     //Rule adornedRule = Rule(adornedHeadLiteral, r.body);
+        //transform the head of the rule according to the bflist of pAlpha
+        adornedRule.head.atom.predicate = adornedRule.head.atom.predicate + "_";
+        for (Term &term : pAlpha.get_entity())
+        {
+            if (term.get_type() == "variable")
+            {
+                adornedRule.head.atom.bflist.push_back('f');
+                adornedRule.head.atom.predicate += "f";
+            }
+            else
+            {
+                adornedRule.head.atom.bflist.push_back('b');
+                adornedRule.head.atom.predicate += "b";
+            }
+        }
 
-        //     // Push the adorned headLiteral into the stack S for further processing
-        //     S.push(adornedHeadLiteral.atom);
+        //initialize the appearedTerms set
+        for (Term &term : adornedRule.head.get_entity())
+        {
+            appearedTerms.insert(term.name);
+        }
 
-        //     // Add the adorned rule to the set of adorned rules
-        //     //adornedRules.insert(adornedRule);
+        // //print appearedTerms
+        // for (string term : appearedTerms)
+        // {
+        //     std::cout << term << " ";
         // }
 
-        return adornedRules;
+        //transform the body of the rule
+        //SIPS method: 
+        //from left to right, check each atom or literal in the body of the rule
+        //if a term in the current atom or literal has appeared in the appearedTerms set, then it is a bound variable, otherwise it is a free variable
+        //after checking an atom or a literal, add all the terms in it to the appearedTerms set
+        for (int i = 0; i < adornedRule.body.size(); i++)
+        {
+            Base *basePtr = adornedRule.body[i]; // get the pointer of the base in the body
+            if (Atom *atomPtr = dynamic_cast<Atom *>(basePtr))
+            {                                // check if the pointer points to Atom or Literal, and do the corresponding type conversion
+                cout << "Atom: " << atomPtr->__str__() << endl;
+                atomPtr->predicate = atomPtr->predicate + "_";
+                for (Term &term : atomPtr->entity)
+                {
+                    if (appearedTerms.find(term.name) != appearedTerms.end())
+                    {
+                        atomPtr->bflist.push_back('b');
+                        atomPtr->predicate += "b";
+                    }
+                    else
+                    {
+                        atomPtr->bflist.push_back('f');
+                        atomPtr->predicate += "f";
+                    }
+                }
+                for (Term &term : atomPtr->entity)
+                {
+                    appearedTerms.insert(term.name);
+                }
+            }
+            else if (Literal *literalPtr = dynamic_cast<Literal *>(basePtr))
+            {                               // check if the pointer points to Atom or Literal, and do the corresponding type conversion
+                cout << "Literal: " << literalPtr->__str__() << endl;
+                literalPtr->atom.predicate = literalPtr->atom.predicate + "_";
+                for (Term &term : literalPtr->atom.entity)
+                {
+                    if (appearedTerms.find(term.name) != appearedTerms.end())
+                    {
+                        literalPtr->atom.bflist.push_back('b');
+                        literalPtr->atom.predicate += "b";
+                    }
+                    else
+                    {
+                        literalPtr->atom.bflist.push_back('f');
+                        literalPtr->atom.predicate += "f";
+                    }
+                }
+                for (Term &term : literalPtr->atom.entity)
+                {
+                    appearedTerms.insert(term.name);
+                }
+            }
+        }
+
+        std::cout << "Adorned Rule: " << adornedRule.__str__() << std::endl;
+        return adornedRule;
+    }
+
+    void BuildIDBList(vector<Rule> P)
+    {
+        for (Rule &r : P)
+        {
+            IDBList.insert(r.head.get_predicate());
+        }
+    }
+
+    void PrintIDBList()
+    {
+        std::cout << "IDB List: " << std::endl;
+        for (string idb : IDBList)
+        {
+            std::cout << idb << " ";
+        }
+        std::cout << std::endl;
     }
 
     vector<Rule> Generate(const Rule &adorned_rule)
     {
         vector<Rule> magic_rules;
 
-        // // 针对输入的adorned_rule生成magic rules
-        // for (const Base* base : adorned_rule.body) {
-        //     const Literal* adorned_literal = dynamic_cast<const Literal*>(base);
-        //     if (adorned_literal) {
-        //         Rule magic_rule;
-        //         Literal magic_literal = GenerateMagicLiteral(*adorned_literal);
-        //         magic_rule.head = magic_literal;
-        //         magic_rule.body.push_back(new Literal(adorned_rule.head));
-
-        //         // 将EDB atoms添加到magic rule的body中
-        //         for (const Base* body_base : adorned_rule.body) {
-        //             const Literal* body_literal = dynamic_cast<const Literal*>(body_base);
-        //             if (body_literal && IsEDBAtom(*body_literal)) {
-        //                 magic_rule.body.push_back(new Literal(*body_literal));
-        //             }
-        //         }
-
-        //         magic_rules.push_back(magic_rule);
-        //     }
-        // }
-
         return magic_rules;
-    }
-
-    Literal GenerateMagicLiteral(const Literal& adorned_literal) {
-        // 生成magic version的adorned literal
-        Literal magic_literal = adorned_literal;
-        // magic_literal.atom.predicate = "magic_" + adorned_literal.atom.predicate;
-
-        // // 去除free variables的operator
-        // vector<Operator> updated_operators;
-        // for (const Operator& op : magic_literal.operators) {
-        //     if (op.interval.left_value != -1 || op.interval.right_value != -1) {
-        //         updated_operators.push_back(op);
-        //     }
-        // }
-        // magic_literal.operators = updated_operators;
-
-        return magic_literal;
-    }
-
-    bool IsEDBAtom(const Literal& literal) {
-        // 检查是否是EDB atom
-        return 0;
     }
 
     Rule Modify(const Rule& adorned_rule) {
         Rule modified_rule;
 
-        // // Copy the head from the adorned rule
-        // modified_rule.head = adorned_rule.head;
-
-        // // Insert magic atom in the body of the rule
-        // Literal magic_head;
-        // Atom magic_atom;
-        // magic_atom.predicate = "magic_" + adorned_rule.head.atom.predicate;
-
-        // // Remove adornments from all other predicates in the body
-        // for (auto base_ptr : adorned_rule.body) {
-        //     if (Literal* literal_ptr = dynamic_cast<Literal*>(base_ptr)) {
-        //         Literal literal = *literal_ptr;
-        //         Literal modified_literal = literal;
-        //         modified_literal.operators.clear();  // Clear operators to remove adornments
-
-        //         // Check if the literal is the head, if yes add magic atom
-        //         if (literal.atom.predicate == adorned_rule.head.atom.predicate) {
-        //             Operator magic_op;
-        //             magic_op.name = "magic";
-        //             modified_literal.operators.push_back(magic_op);
-        //         }
-
-        //         modified_rule.body.push_back(new Literal(modified_literal));
-        //     }
-        // }
         return modified_rule;
+    }
+
+    void printMagicFact() {
+        std::cout << "Magic Fact: " << magicFact.__str__() << std::endl;
+    }
+
+    void printMagicRules() {
+        std::cout << "Magic Rules: " << std::endl;
+        for (Rule& rule : magicRules) {
+            std::cout << rule.__str__() << std::endl;
+        }
     }
 };
 
