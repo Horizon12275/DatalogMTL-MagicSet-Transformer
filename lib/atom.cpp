@@ -74,22 +74,47 @@ bool Atom::operator==(const Atom &other) const
 
 string Atom::__str__()
 {
-    if (!this->interval.is_none())
-    {
+    // if (!this->interval.is_none())
+    // {
+    //     if (this->entity.size() > 0)
+    //         return this->predicate + "(" +
+    //                Term::termlist_to_str(this->entity) + ")@" +
+    //                this->interval.__str__();
+    //     else
+    //         return this->predicate + "@" + this->interval.__str__();
+    // }
+    // else
+    // {
         if (this->entity.size() > 0)
-            return this->predicate + "(" +
-                   Term::termlist_to_str(this->entity) + ")@" +
-                   this->interval.__str__();
+            return Atom::isMagic_to_string() + this->predicate + Atom::bflist_to_string() + "(" + Term::termlist_to_str(this->entity) + ")";
         else
-            return this->predicate + "@" + this->interval.__str__();
+            return Atom::isMagic_to_string() + this->predicate;
+    // }
+}
+
+string Atom::__str_without_term__()
+{
+    return Atom::isMagic_to_string() + this->predicate + Atom::bflist_to_string();
+}
+
+string Atom::bflist_to_string()
+{
+    if(bflist.size() == 0)
+        return "";
+    string str_out = "_";
+    for (char c : this->bflist)
+    {
+        str_out += c;
     }
+    return str_out;
+}
+
+string Atom::isMagic_to_string()
+{
+    if (this->isMagic)
+        return "magic_";
     else
-    {
-        if (this->entity.size() > 0)
-            return this->predicate + "(" + Term::termlist_to_str(this->entity) + ")";
-        else
-            return this->predicate;
-    }
+        return "";
 }
 
 size_t Atom::__hash__()

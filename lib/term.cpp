@@ -15,6 +15,11 @@ string Term::__str__() {return this->name;}
 
 string Term::get_type() {return this->type;}
 
+string Term::set_type(string type) {
+    this->type = type;
+    return this->type;
+}
+
 size_t Term::__hash__() {
     hash<string> hash_fn;
     return hash_fn(this->type + this->name);

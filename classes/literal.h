@@ -41,6 +41,7 @@ public:
     bool __eq__(Literal other);
     bool operator == (const Literal & other) const;
     string __str__();
+    string __str_without_interval__();
     size_t __hash__();
 
     Literal(const Literal& other);

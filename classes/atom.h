@@ -46,6 +46,9 @@ public:
     bool __eq__(Atom other);
     bool operator == (const Atom & other) const;
     string __str__();
+    string __str_without_term__();
+    string bflist_to_string();
+    string isMagic_to_string();
     size_t __hash__();
 
     string get_predicate();

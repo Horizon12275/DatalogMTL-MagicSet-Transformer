@@ -105,6 +105,12 @@ string Literal::__str__() {
     return str;
 }
 
+string Literal::__str_without_interval__() {
+    string str = "";
+    str += this->atom.__str_without_term__();
+    return str;
+}
+
 size_t Literal::__hash__() {
     hash<string> hash_fn;
     return hash_fn("Literal" + this->__str__());

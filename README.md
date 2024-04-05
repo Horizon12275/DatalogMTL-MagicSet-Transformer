@@ -14,7 +14,8 @@
 
 ### Method 2
 
-(Deprecated) ~~ 1. Open .sln or add files manually in Visual Studio 2022 as below (or use your own cmakefiles): ~~
+(Deprecated) 
+~~ 1. Open .sln or add files manually in Visual Studio 2022 as below (or use your own cmakefiles): ~~
 
 ![sln](./pics/sln.png)
 

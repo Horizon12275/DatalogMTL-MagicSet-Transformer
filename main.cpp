@@ -11,14 +11,22 @@ int main() {
 
 	// use magic set method
 	MagicSet magicSet;
+
+	// in this premature version, we only parse the head of the rule as the query, note that the body is empty and we need :- to separate the head and the body
 	vector<string> querys; //input query
 	vector<Rule> queryList;
-	querys.push_back("path(1,5):-"); // input query here
-	// in this premature version, we only parse the head of the rule as the query, note that the body is empty and we need :- to separate the head and the body
-	vector<string> rules; //input rules
+	vector<string> rules; // input rules
 	vector<Rule> ruleList;
-	rules.push_back("path(X,Y):-edge(X,Y)"); // input rules here
-	rules.push_back("Boxminus[0,5]path(X,Y):-edge(X,Z),Boxminus[0,5]path(Z,Y)");
+
+	// // Example 1
+	// querys.push_back("path(1,5):-"); // input query here
+	// rules.push_back("path(X,Y):-edge(X,Y)"); // input rules here
+	// rules.push_back("path(X,Y):-edge(X,Z),path(Z,Y)");
+
+	// Example 2
+	querys.push_back("ill(a):-");		 // input query here
+	rules.push_back("Boxplus[0,10]ill(X):-Boxminus[0,10]infected(X)"); // input rules here
+	rules.push_back("Boxplus[0,10]infected(X):-Meet(X,Y),ill(Y)");
 
 	queryList = load_program(querys); // parse the query string
 	ruleList = load_program(rules); // parse the rule string
@@ -37,7 +45,7 @@ int main() {
 }
 
 void test(){
-	
+
 	//用作基本操作的参考测试
 	Atom atom1("predicate1");						  // 创建一个Atom对象
 	Atom atom2("predicate2", {Term("X"), Term("Y")}); // 创建一个Atom对象

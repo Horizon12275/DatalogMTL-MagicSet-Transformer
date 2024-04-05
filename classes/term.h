@@ -16,6 +16,7 @@ public:
 
     string __str__();
     string get_type();
+    string set_type(string type);
     size_t __hash__();
     bool __eq__(Term other);
     static vector<Term> const_str_to_termlist(string entity_str);
