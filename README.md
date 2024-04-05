@@ -3,10 +3,10 @@
 ## Usage
 
 ```cpp
-MagicSet magicSet;
-Literal query;
-vector<Rule> ruleList;
-vector<Rule> magicRules = magicSet.MS(query, ruleList);
+MagicSet magicSet;                                          // use magic set method
+Literal query;                                              // get the query
+vector<Rule> ruleList;                                      // get the rules
+vector<Rule> magicRules = magicSet.MS(query, ruleList);     // get the magic rules
 ```
 
 ## Configurations

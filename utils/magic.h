@@ -67,6 +67,7 @@ public:
         // print results
         printOriginalQuery(Q);
         printOriginalProgram(P);
+        printAdornedRules();
         printMagicFact();
         printMagicProgram();
 
@@ -391,6 +392,14 @@ private:
         std::cout << std::endl;
         std::cout << "Magic Program: " << std::endl;
         for (Rule& rule : magicRules) {
+            std::cout << "\t" << rule.__str__() << std::endl;
+        }
+    }
+
+    void printAdornedRules() {
+        std::cout << std::endl;
+        std::cout << "Adorned Rules: " << std::endl;
+        for (Rule& rule : adornedRules) {
             std::cout << "\t" << rule.__str__() << std::endl;
         }
     }
