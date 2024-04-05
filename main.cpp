@@ -7,56 +7,56 @@
 void test();
 
 int main() {
-	// File I/O Configurations
-	std::ifstream inputFile("D:/Horizon/SJTU/Projects/ongoing/DatalogMTL-MagicSet-Transformer/test/input/input.txt"); // input file
-	if (!inputFile.is_open()) // check if the input file is opened successfully
-	{
-		std::cerr << "Failed to open input file!" << std::endl;
-		return 1;
-	}
-	std::string line;
-	std::string query_string;
-	std::vector<std::string> rules_string;
+	// // File I/O Configurations
+	// std::ifstream inputFile("D:/Horizon/SJTU/Projects/ongoing/DatalogMTL-MagicSet-Transformer/test/input/input.txt"); // input file
+	// if (!inputFile.is_open()) // check if the input file is opened successfully
+	// {
+	// 	std::cerr << "Failed to open input file!" << std::endl;
+	// 	return 1;
+	// }
+	// std::string line;
+	// std::string query_string;
+	// std::vector<std::string> rules_string;
 
-	bool readingQuery = false;
-	bool readingRules = false;
+	// bool readingQuery = false;
+	// bool readingRules = false;
 
-	std::ofstream outputFile("D:/Horizon/SJTU/Projects/ongoing/DatalogMTL-MagicSet-Transformer/test/output/output.txt"); // output file
-	std::streambuf *original_cout_streambuf = std::cout.rdbuf(); // save cout buffer
-	std::cout.rdbuf(outputFile.rdbuf()); // redirect cout to output file
+	// std::ofstream outputFile("D:/Horizon/SJTU/Projects/ongoing/DatalogMTL-MagicSet-Transformer/test/output/output.txt"); // output file
+	// std::streambuf *original_cout_streambuf = std::cout.rdbuf(); // save cout buffer
+	// std::cout.rdbuf(outputFile.rdbuf()); // redirect cout to output file
 
-	while (std::getline(inputFile, line))
-	{
-		if (line.find("query:") != std::string::npos)
-		{
-			readingQuery = true;
-			readingRules = false;
-			continue;
-		}
+	// while (std::getline(inputFile, line))
+	// {
+	// 	if (line.find("query:") != std::string::npos)
+	// 	{
+	// 		readingQuery = true;
+	// 		readingRules = false;
+	// 		continue;
+	// 	}
 
-		if (line.find("rules:") != std::string::npos)
-		{
-			readingQuery = false;
-			readingRules = true;
-			continue; 
-		}
+	// 	if (line.find("rules:") != std::string::npos)
+	// 	{
+	// 		readingQuery = false;
+	// 		readingRules = true;
+	// 		continue; 
+	// 	}
 
-		if (readingQuery)
-		{
-			query_string = line; 
-		}
-		else if (readingRules)
-		{
-			rules_string.push_back(line); 
-		}
-	}
+	// 	if (readingQuery)
+	// 	{
+	// 		query_string = line; 
+	// 	}
+	// 	else if (readingRules)
+	// 	{
+	// 		rules_string.push_back(line); 
+	// 	}
+	// }
 
-	std::cout << "Query: " << query_string << std::endl;
-	std::cout << "Rules:" << std::endl;
-	for (const auto &rule : rules_string)
-	{
-		std::cout << rule << std::endl;
-	}
+	// //std::cout << "Query: " << query_string << std::endl;
+	// //std::cout << "Rules:" << std::endl;
+	// for (const auto &rule : rules_string)
+	// {
+	// 	std::cout << rule << std::endl;
+	// }
 
 	// use magic set method
 	MagicSet magicSet;
@@ -67,12 +67,14 @@ int main() {
 	vector<string> rules; // input rules
 	vector<Rule> ruleList;
 
+	// Example List Below
+
 	// Example from input file
-	querys.push_back(query_string); // input query here
-	for (const auto &rule : rules_string)
-	{
-		rules.push_back(rule); // input rules here
-	}
+	// querys.push_back(query_string); // input query here
+	// for (const auto &rule : rules_string)
+	// {
+	// 	rules.push_back(rule); // input rules here
+	// }
 
 	// // Example 1
 	// querys.push_back("path(1,5):-"); // input query here
@@ -83,6 +85,16 @@ int main() {
 	// querys.push_back("ill(a):-");		 // input query here
 	// rules.push_back("Boxplus[0,10]ill(X):-Boxminus[0,10]infected(X)"); // input rules here
 	// rules.push_back("Boxplus[0,10]infected(X):-Meet(X,Y),ill(Y)");
+
+	// // Example 3
+	// querys.push_back("Infected(d):-");		 // input query here
+	// rules.push_back("Boxplus[10,20]Infected(X):-Meet(X,Y),Infected(Y)");	// input rules here
+
+	// // Example 4
+	querys.push_back("ill(d):-"); // input query here
+	rules.push_back("Boxplus[0,5]grow(X):-Boxminus[0,5]Infected(X)"); // input rules here
+	rules.push_back("Boxplus[0,10]ill(X):-Boxminus[0,6]grow(X)");
+	rules.push_back("Boxplus");
 
 	queryList = load_program(querys); // parse the query string
 	ruleList = load_program(rules); // parse the rule string
@@ -97,9 +109,10 @@ int main() {
 	query = queryList[0].head; // get the query
 	vector<Rule> magicRules = magicSet.MS(query, ruleList); // get the magic rules
 
-	std::cout.rdbuf(original_cout_streambuf); // restore cout buffer
-	inputFile.close(); // close input file
-	outputFile.close(); // close output file
+	// Configuration of I/O
+	// std::cout.rdbuf(original_cout_streambuf); // restore cout buffer
+	// inputFile.close(); // close input file
+	// outputFile.close(); // close output file
 	return 0;
 }
 

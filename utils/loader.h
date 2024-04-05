@@ -13,7 +13,7 @@ vector<Rule> load_program(vector<string> rules) {
     vector<Rule> program;
     for (auto iter = rules.begin(); iter != rules.end(); iter ++) {
         vector<Rule> rule = parse_rule(*iter);
-        cout << rule[0].__str__() << "Loaded!" << endl;
+        cout <<"Load Check:\t"<< rule[0].__str__() << "      Loaded!" << endl;
         program.insert(program.end(), rule.begin(), rule.end());
     }
     return program;

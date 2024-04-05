@@ -2,7 +2,12 @@
 
 ## Usage
 
-
+```cpp
+MagicSet magicSet;
+Literal query;
+vector<Rule> ruleList;
+vector<Rule> magicRules = magicSet.MS(query, ruleList);
+```
 
 ## Configurations
 

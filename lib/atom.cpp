@@ -74,22 +74,24 @@ bool Atom::operator==(const Atom &other) const
 
 string Atom::__str__()
 {
-    // if (!this->interval.is_none())
-    // {
-    //     if (this->entity.size() > 0)
-    //         return this->predicate + "(" +
-    //                Term::termlist_to_str(this->entity) + ")@" +
-    //                this->interval.__str__();
-    //     else
-    //         return this->predicate + "@" + this->interval.__str__();
-    // }
-    // else
-    // {
+    if (!this->interval.is_none())
+    {
+        if (this->entity.size() > 0)
+            return Atom::isMagic_to_string() +
+                   this->predicate + 
+                   Atom::bflist_to_string() + "(" +
+                   Term::termlist_to_str(this->entity) + ")@" +
+                   this->interval.__str__();
+        else
+            return Atom::isMagic_to_string() + this->predicate + "@" + this->interval.__str__();
+    }
+    else
+    {
         if (this->entity.size() > 0)
             return Atom::isMagic_to_string() + this->predicate + Atom::bflist_to_string() + "(" + Term::termlist_to_str(this->entity) + ")";
         else
             return Atom::isMagic_to_string() + this->predicate;
-    // }
+    }
 }
 
 string Atom::__str_without_term__()

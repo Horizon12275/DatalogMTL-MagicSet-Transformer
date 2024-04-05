@@ -95,9 +95,9 @@ string Term::termlist_to_str(vector<Term> termlist) {
             entity_str += ",";
         entity_str += iter->name;
         if (iter->type == "constant")
-            entity_str += "#c";
+            entity_str += ""; // "#c"
         if (iter->type == "variable")
-            entity_str += "#v";
+            entity_str += ""; // "#v"
     }
     return entity_str;
 }

@@ -7,7 +7,7 @@
 #include "rule.h"
 
 class MagicSet {
-public:
+private:
     Literal magicFact;
     stack<Literal> S;
     vector<Rule> adornedRules;
@@ -15,19 +15,13 @@ public:
     vector<Rule> magicRules;
     set<string> IDBList;
     set<string> adornedHistory;
-
+public:
     vector<Rule> MS(Literal Q, vector<Rule> P) {
-        modifiedRules.clear();
-        adornedRules.clear();
-        magicRules.clear();
-        IDBList.clear();
-        adornedHistory.clear();
-        magicFact = Literal();
-        S = stack<Literal>();
+        clear();
 
         BuildQuerySeeds(Q, S); // Build query seeds and generate magicFact
         BuildIDBList(P); // Build IDB list
-        PrintIDBList();
+        // PrintIDBList();
 
         // cout << "Query: " << Q.__str__() << endl;
         // cout << "Query Seeds: " << endl;
@@ -55,6 +49,8 @@ public:
             }
         }
 
+        clearEDBbflist();
+
         // generate magic rules
         for (const Rule& ra : adornedRules) {
             vector<Rule> generatedRules = Generate(ra);
@@ -69,8 +65,10 @@ public:
         }
 
         // print results
+        printOriginalQuery(Q);
+        printOriginalProgram(P);
         printMagicFact();
-        printMagicRules();
+        printMagicProgram();
 
         return magicRules;
     }
@@ -84,6 +82,7 @@ private:
         //magicFact.atom.predicate = "magic_" + magicFact.atom.predicate + "_";
         
         for (Term& term : magicFact.get_entity()) {
+            //cout << term.name << " " << term.get_type() << endl;
             if (term.get_type() == "variable") {
                 magicFact.atom.bflist.push_back('f');
                 //magicFact.atom.predicate += "f";
@@ -382,21 +381,71 @@ private:
     }
 
     void printMagicFact() {
-        std::cout << "Magic Fact: " << magicFact.__str__() << std::endl;
+        std::cout << std::endl;
+        std::cout << "Magic Fact: " << std::endl;
+        std::cout << "\t" << magicFact.__str__() << std::endl;
+
     }
 
-    void printMagicRules() {
-        std::cout << "Magic Rules: " << std::endl;
+    void printMagicProgram() {
+        std::cout << std::endl;
+        std::cout << "Magic Program: " << std::endl;
         for (Rule& rule : magicRules) {
-            std::cout << rule.__str__() << std::endl;
+            std::cout << "\t" << rule.__str__() << std::endl;
         }
     }
 
     void printAdornedHistory() {
+        std::cout << std::endl;
         std::cout << "Adorned History: " << std::endl;
         for (string adorned : adornedHistory) {
             std::cout << adorned << std::endl;
         }
+    }
+
+    void printOriginalQuery(Literal Q) {
+        std::cout << std::endl;
+        std::cout << "Original Query: " << std::endl;
+        std::cout << "\t" << Q.__str__() << std::endl;
+    }
+
+    void printOriginalProgram(vector<Rule> P) {
+        std::cout << std::endl;
+        std::cout << "Original Program: " << std::endl;
+        for (Rule& rule : P) {
+            std::cout << "\t" << rule.__str__() << std::endl;
+        }
+    }
+
+    void clearEDBbflist() { // if the literal or atom is not in the IDB list, then clear the bflist of it
+        for (Rule& rule : adornedRules) {
+            if (IDBList.find(rule.head.get_predicate()) == IDBList.end()) {
+                rule.head.atom.bflist.clear();
+            }
+            for (Base* basePtr : rule.body) {
+                if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
+                    if (IDBList.find(atomPtr->predicate) == IDBList.end()) {
+                        atomPtr->bflist.clear();
+                    }
+                } else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
+                    if (IDBList.find(literalPtr->atom.predicate) == IDBList.end()) {
+                        literalPtr->atom.bflist.clear();
+                    }
+                }
+            }
+        }
+    }
+
+    void clear(){
+        magicFact = Literal();
+        while (!S.empty()) {
+            S.pop();
+        }
+        adornedRules.clear();
+        modifiedRules.clear();
+        magicRules.clear();
+        IDBList.clear();
+        adornedHistory.clear();
     }
 };
 
