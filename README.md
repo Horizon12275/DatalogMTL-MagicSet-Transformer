@@ -1,8 +1,12 @@
 # DatalogMTL-MagicSet-Transformer
 
+## Usage
+
+
+
 ## Configurations
 
-### Method 1
+### Method
 
 1. mkdir build
 
@@ -11,21 +15,6 @@
 3. cmake ..
 
 4. cmake --build . --clean-first
-
-### Method 2
-
-(Deprecated) 
-~~ 1. Open .sln or add files manually in Visual Studio 2022 as below (or use your own cmakefiles): ~~
-
-![sln](./pics/sln.png)
-
-(Just For Check the Class Diagram) 2. Add include path to the solution as below:
-
-![property](./pics/property.png)
-
-![includePath1](./pics/includePath1.png)
-
-![includePath2](./pics/includePath2.png)
 
 ### Tips
 
