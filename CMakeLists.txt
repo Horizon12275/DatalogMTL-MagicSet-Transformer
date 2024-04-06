@@ -19,3 +19,4 @@ include_directories(utils)
 
 # generate exe
 add_executable(DMT ${SOURCES})
+

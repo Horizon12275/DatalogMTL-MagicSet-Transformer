@@ -1,3 +1,8 @@
+#ifdef _HAS_STD_BYTE
+#undef _HAS_STD_BYTE
+#endif
+#define _HAS_STD_BYTE 0
+
 #ifndef MAGIC_H
 #define MAGIC_H
 #include <iostream>

@@ -1,14 +1,22 @@
-Query: path(1,5):-
-Rules:
-path(X,Y):-edge(X,Y)
-path(X,Y):-edge(X,Z),path(Z,Y)
-path(1#c,5#c):-Loaded!
-path(X#v,Y#v):-edge(X#v,Y#v)Loaded!
-path(X#v,Y#v):-edge(X#v,Z#v), path(Z#v,Y#v)Loaded!
-IDB List: 
-path 
-Magic Fact: magic_path_bb(1#c,5#c)
-Magic Rules: 
-magic_path_bb(Z#c,Y#c):-magic_path_bb(X#v,Y#v), edge_bf(X#c,Z#v)
-path_bb(X#v,Y#v):-magic_path_bb(X#v,Y#v), edge_bb(X#c,Y#c)
-path_bb(X#v,Y#v):-magic_path_bb(X#v,Y#v), edge_bf(X#c,Z#v), path_bb(Z#c,Y#c)
+Load Check:	path(1,5):-      Loaded!
+Load Check:	path(X,Y):-edge(X,Y)      Loaded!
+Load Check:	path(X,Y):-edge(X,Z), path(Z,Y)      Loaded!
+
+Original Query: 
+	path(1,5)
+
+Original Program: 
+	path(X,Y):-edge(X,Y)
+	path(X,Y):-edge(X,Z), path(Z,Y)
+
+Adorned Rules: 
+	path_bb(X,Y):-edge(X,Y)
+	path_bb(X,Y):-edge(X,Z), path_bb(Z,Y)
+
+Magic Fact: 
+	magic_path_bb(1,5)
+
+Magic Program: 
+	magic_path_bb(Z,Y):-magic_path_bb(X,Y), edge(X,Z)
+	path_bb(X,Y):-magic_path_bb(X,Y), edge(X,Y)
+	path_bb(X,Y):-magic_path_bb(X,Y), edge(X,Z), path_bb(Z,Y)
