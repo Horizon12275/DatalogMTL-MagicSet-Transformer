@@ -135,9 +135,19 @@ private:
         }
 
         //initialize the appearedTerms set
-        for (Term &term : adornedRule.head.get_entity())
+        /*for (Term &term : adornedRule.head.get_entity())
         {
             appearedTerms.insert(term.name);
+        }*/
+
+        auto entity = adornedRule.head.get_entity();
+
+        for (int i = 0; i < entity.size(); i++)
+        {
+            Term term = entity[i];
+
+            if (adornedRule.head.atom.bflist[i] == 'b')
+                appearedTerms.insert(term.name);
         }
 
         adornedHistory.insert(pAlpha.__str_without_interval__());
@@ -195,6 +205,15 @@ private:
                 {
                     appearedTerms.insert(term.name);
                 }
+
+                /*for (int i = 0; i < (atomPtr->entity).size(); i++)
+                {
+                    Term term = atomPtr->entity[i];
+
+                    if ((atomPtr->bflist)[i] == 'b')
+                        appearedTerms.insert(term.name);
+                }*/
+
             }
             else if (Literal *literalPtr = dynamic_cast<Literal *>(basePtr))
             {                               // check if the pointer points to Atom or Literal, and do the corresponding type conversion
@@ -230,10 +249,19 @@ private:
                 //adornedHistory.insert(literalPtr->__str_without_interval__());
                 //printAdornedHistory();
 
-                for (Term &term : literalPtr->atom.entity)
+                /*for (Term &term : literalPtr->atom.entity)
                 {
                     appearedTerms.insert(term.name);
+                }*/
+
+                for (int i = 0; i < (literalPtr->atom.entity).size(); i++)
+                {
+                    Term term = (literalPtr->atom.entity)[i];
+
+                    if ((literalPtr->atom.bflist)[i] == 'b')
+                        appearedTerms.insert(term.name);
                 }
+
             }
         }
 
@@ -356,6 +384,36 @@ private:
         return generated_rules;
     }
 
+    //Rule Modify(const Rule& adorned_rule) {
+    //    Rule modified_rule;
+    //    // moddify the rule : 
+    //    // create a new literal with the same predicate and terms as the head of the adorned rule, and add magic to the predicate(isMagic = true)
+    //    // then push the new literal to the first of the body vector of the adorned rule
+    //    modified_rule.head = adorned_rule.head;
+    //    Literal* new_head = new Literal(adorned_rule.head);
+    //    new_head->atom.isMagic = true;
+    //    // if the operator is boxminus, then change it to diamondminus
+    //    // if the operator is boxplus, then change it to diamondplus
+    //    if (new_head->get_op_name() == "Boxminus") {
+    //        new_head->operators[0].name = "Diamondminus";
+    //    } else if (new_head->get_op_name() == "Boxplus") {
+    //        new_head->operators[0].name = "Diamondplus";
+    //    }
+    //    modified_rule.body.push_back(new_head);
+    //    // copy the body of the adorned rule to the body of the modified rule
+    //    for(Base* basePtr : adorned_rule.body) {
+    //        if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
+    //            Atom* new_atom = new Atom(*atomPtr);
+    //            modified_rule.body.push_back(new_atom);
+    //        } else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
+    //            Literal* new_literal = new Literal(*literalPtr);
+    //            modified_rule.body.push_back(new_literal);
+    //        }
+    //    }
+    //    //cout << "Modified Rule: " << modified_rule.__str__() << endl;
+    //    return modified_rule;
+    //}
+
     Rule Modify(const Rule& adorned_rule) {
         Rule modified_rule;
         // moddify the rule : 
@@ -363,22 +421,27 @@ private:
         // then push the new literal to the first of the body vector of the adorned rule
         modified_rule.head = adorned_rule.head;
         Literal* new_head = new Literal(adorned_rule.head);
+        modified_rule.head.atom.bflist.clear();
         new_head->atom.isMagic = true;
         // if the operator is boxminus, then change it to diamondminus
         // if the operator is boxplus, then change it to diamondplus
         if (new_head->get_op_name() == "Boxminus") {
             new_head->operators[0].name = "Diamondminus";
-        } else if (new_head->get_op_name() == "Boxplus") {
+        }
+        else if (new_head->get_op_name() == "Boxplus") {
             new_head->operators[0].name = "Diamondplus";
         }
         modified_rule.body.push_back(new_head);
         // copy the body of the adorned rule to the body of the modified rule
-        for(Base* basePtr : adorned_rule.body) {
+        for (Base* basePtr : adorned_rule.body) {
             if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
                 Atom* new_atom = new Atom(*atomPtr);
+                new_atom->bflist.clear();
                 modified_rule.body.push_back(new_atom);
-            } else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
+            }
+            else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
                 Literal* new_literal = new Literal(*literalPtr);
+                new_literal->atom.bflist.clear();
                 modified_rule.body.push_back(new_literal);
             }
         }

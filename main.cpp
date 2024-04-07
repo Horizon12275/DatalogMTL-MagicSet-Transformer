@@ -112,18 +112,18 @@ void devMode()
 	// Example List Below
 
 	// // Example 1
-	// querys.push_back("path(1,5):-"); // input query here
-	// rules.push_back("path(X,Y):-edge(X,Y)"); // input rules here
-	// rules.push_back("path(X,Y):-edge(X,Z),path(Z,Y)");
+	 querys.push_back("path(1,5):-"); // input query here
+	 rules.push_back("path(X,Y):-edge(X,Y)"); // input rules here
+	 rules.push_back("path(X,Y):-edge(X,Z),path(Z,Y)");
 
 	// // Example 2
-	// querys.push_back("ill(a):-");		 // input query here
-	// rules.push_back("Boxplus[0,10]ill(X):-Boxminus[0,10]infected(X)"); // input rules here
-	// rules.push_back("Boxplus[0,10]infected(X):-Meet(X,Y),ill(Y)");
+	 //querys.push_back("ill(a):-");		 // input query here
+	 //rules.push_back("Boxplus[0,10]ill(X):-Boxminus[0,10]infected(X)"); // input rules here
+	 //rules.push_back("Boxplus[0,10]infected(X):-Meet(X,Y),ill(Y)");
 
 	// // Example 3
-	// querys.push_back("Infected(d):-");		 // input query here
-	// rules.push_back("Boxplus[10,20]Infected(X):-Meet(X,Y),Infected(Y)");	// input rules here
+	 //querys.push_back("Infected(d):-");		 // input query here
+	 //rules.push_back("Boxplus[10,20]Infected(X):-Meet(X,Y),Infected(Y)");	// input rules here
 
 	// // Example 4
 	// querys.push_back("ill(d):-"); // input query here
@@ -132,15 +132,15 @@ void devMode()
 	// rules.push_back("Boxplus[0,4]Infected(X):-Meet(X,Y),ill(Y)");
 
 	// // // Example 5
-	// querys.push_back("Green(a):-"); // input query here
-	// rules.push_back("Blue(X):-R2B(X),Boxminus[0,4]Red(X)"); // input rules here
-	// rules.push_back("Green(X):-B2G(X,Y),Boxminus[0,5]Blue(X),Diamondminus[0,4]Blue(Y)"); // input rules here
+	 //querys.push_back("Green(a):-"); // input query here
+	 //rules.push_back("Blue(X):-R2B(X),Boxminus[0,4]Red(X)"); // input rules here
+	 //rules.push_back("Green(X):-B2G(X,Y),Boxminus[0,5]Blue(X),Diamondminus[0,4]Blue(Y)"); // input rules here
 
 	// // Example 6
-	querys.push_back("Suspect(david):-");																	// input query here
-	rules.push_back("TransactionChain(X,Y) :- Transaction(X,Y), RedList(X)");								// input rules here
-	rules.push_back("TransactionChain(X,Z) :- Diamondminus[0,24] TransactionChain(X,Y), Transaction(Y,Z)"); // input rules here
-	rules.push_back("Boxplus[0,inf) Suspect(Y) :- TransactionChain(X,Y), HighRisk(Y)");						// input rules here
+	//querys.push_back("Suspect(david):-");																	// input query here
+	//rules.push_back("TransactionChain(X,Y) :- Transaction(X,Y), RedList(X)");								// input rules here
+	//rules.push_back("TransactionChain(X,Z) :- Diamondminus[0,24] TransactionChain(X,Y), Transaction(Y,Z)"); // input rules here
+	//rules.push_back("Boxplus[0,inf) Suspect(Y) :- TransactionChain(X,Y), HighRisk(Y)");						// input rules here
 
 	queryList = load_program(querys); // parse the query string
 	ruleList = load_program(rules);	  // parse the rule string

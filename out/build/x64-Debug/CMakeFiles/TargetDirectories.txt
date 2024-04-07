@@ -1,0 +1,3 @@
+D:/code_for_self_learning/DatalogMTL-MagicSet-Transformer/out/build/x64-Debug/CMakeFiles/DMT.dir
+D:/code_for_self_learning/DatalogMTL-MagicSet-Transformer/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/code_for_self_learning/DatalogMTL-MagicSet-Transformer/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
