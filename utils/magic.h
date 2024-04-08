@@ -287,6 +287,71 @@ private:
         std::cout << std::endl;
     }
 
+    void clearTermWithf(Atom* atom) {
+        auto bfIter = atom->bflist.begin();
+        auto entityIter = atom->entity.begin();
+
+        bool existB = false;
+
+        while (bfIter != atom->bflist.end()) {
+            if (*bfIter == 'f') {
+                entityIter = atom->entity.erase(entityIter);
+            }
+            else {
+                existB = true;
+                ++entityIter;
+            }
+            ++bfIter;
+        }
+
+        if (existB) {
+
+            auto bfIter = atom->bflist.begin();
+
+            while (bfIter != atom->bflist.end()) {
+                if (*bfIter == 'f') {
+                    bfIter = atom->bflist.erase(bfIter);
+                    atom->bflist_size--;
+                }
+                else {
+                    ++bfIter;
+                }
+            }
+        }
+
+    }
+
+    void MagicHead2Body(Literal& l) {
+        l.atom.isMagic = true;
+        // if the operator is boxminus, then change it to diamondminus
+        // if the operator is boxplus, then change it to diamondplus
+        if (l.get_op_name() == "Boxminus") {
+            l.operators[0].name = "Diamondminus";
+        }
+        else if (l.get_op_name() == "Boxplus") {
+            l.operators[0].name = "Diamondplus";
+        }
+
+        Atom* atom = &(l.atom);
+        clearTermWithf(atom);
+        
+    }
+
+    void MagicBody2Head(Literal& l) {
+        l.atom.isMagic = true;
+        // if the operator is diamondminus, then change it to boxminus
+        // if the operator is diamondplus, then change it to boxplus
+        if (l.get_op_name() == "Diamondminus") {
+            l.operators[0].name = "Boxminus";
+        }
+        else if (l.get_op_name() == "Diamondplus") {
+            l.operators[0].name = "Boxplus";
+        }
+
+        Atom* atom = &(l.atom);
+        clearTermWithf(atom);
+    }
+
     vector<Rule> Generate(const Rule &adorned_rule)
     {
         vector<Rule> generated_rules;
@@ -304,24 +369,12 @@ private:
                     //cout << "IDB: " << atomPtr->predicate << endl;
                     Rule new_rule;
                     new_rule.head = Literal(*atomPtr);
-                    new_rule.head.atom.isMagic = true;
-                    // if the operator is diamondminus, then change it to boxminus
-                    // if the operator is diamondplus, then change it to boxplus
-                    if (new_rule.head.get_op_name() == "Diamondminus") {
-                        new_rule.head.operators[0].name = "Boxminus";
-                    } else if (new_rule.head.get_op_name() == "Diamondplus") {
-                        new_rule.head.operators[0].name = "Boxplus";
-                    }
+                    MagicBody2Head(new_rule.head);
+
                     Literal *new_body_head = new Literal(adorned_rule.head);
-                    new_body_head->atom.isMagic = true;
+                    MagicHead2Body(*new_body_head);
                     new_rule.body.push_back(new_body_head);
-                    // if the operator is boxminus, then change it to diamondminus
-                    // if the operator is boxplus, then change it to diamondplus
-                    if (new_body_head->get_op_name() == "Boxminus") {
-                        new_body_head->operators[0].name = "Diamondminus";
-                    } else if (new_body_head->get_op_name() == "Boxplus") {
-                        new_body_head->operators[0].name = "Diamondplus";
-                    }
+                    
                     // copy the body of the adorned rule to the body of the new rule (already scaned literals or atoms)
                     for(int j = 0; j < i; j++) {
                         Base* basePtr = adorned_rule.body[j];
@@ -343,24 +396,12 @@ private:
                     Rule new_rule;
                     new_rule.head = Literal(literalPtr->atom);
                     new_rule.head.operators = literalPtr->operators;
-                    new_rule.head.atom.isMagic = true;
-                    // if the operator is diamondminus, then change it to boxminus
-                    // if the operator is diamondplus, then change it to boxplus
-                    if (new_rule.head.get_op_name() == "Diamondminus") {
-                        new_rule.head.operators[0].name = "Boxminus";
-                    } else if (new_rule.head.get_op_name() == "Diamondplus") {
-                        new_rule.head.operators[0].name = "Boxplus";
-                    }
+                    MagicBody2Head(new_rule.head);
+
                     Literal *new_body_head = new Literal(adorned_rule.head);
-                    new_body_head->atom.isMagic = true;
+                    MagicHead2Body(*new_body_head);
                     new_rule.body.push_back(new_body_head);
-                    // if the operator is boxminus, then change it to diamondminus
-                    // if the operator is boxplus, then change it to diamondplus
-                    if (new_body_head->get_op_name() == "Boxminus") {
-                        new_body_head->operators[0].name = "Diamondminus";
-                    } else if (new_body_head->get_op_name() == "Boxplus") {
-                        new_body_head->operators[0].name = "Diamondplus";
-                    }
+                    
                     // copy the body of the adorned rule (already scaned literals or atoms)
                     for(int j = 0; j < i; j++) {
                         Base* basePtr = adorned_rule.body[j];
@@ -422,15 +463,7 @@ private:
         modified_rule.head = adorned_rule.head;
         Literal* new_head = new Literal(adorned_rule.head);
         modified_rule.head.atom.bflist.clear();
-        new_head->atom.isMagic = true;
-        // if the operator is boxminus, then change it to diamondminus
-        // if the operator is boxplus, then change it to diamondplus
-        if (new_head->get_op_name() == "Boxminus") {
-            new_head->operators[0].name = "Diamondminus";
-        }
-        else if (new_head->get_op_name() == "Boxplus") {
-            new_head->operators[0].name = "Diamondplus";
-        }
+        MagicHead2Body(*new_head);
         modified_rule.body.push_back(new_head);
         // copy the body of the adorned rule to the body of the modified rule
         for (Base* basePtr : adorned_rule.body) {
