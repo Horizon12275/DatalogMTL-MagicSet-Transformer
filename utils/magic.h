@@ -9,7 +9,11 @@
 #include <stack>
 #include <set>
 #include <vector>
+#include <windows.h>
+#include <conio.h>
 #include "rule.h"
+
+extern HANDLE hConsole;
 
 class MagicSet {
 private:
@@ -484,14 +488,18 @@ private:
 
     void printMagicFact() {
         std::cout << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
         std::cout << "Magic Fact: " << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // set title color to white
         std::cout << "\t" << magicFact.__str__() << std::endl;
 
     }
 
     void printMagicProgram() {
         std::cout << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
         std::cout << "Magic Program: " << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // set title color to white
         for (Rule& rule : magicRules) {
             std::cout << "\t" << rule.__str__() << std::endl;
         }
@@ -499,7 +507,9 @@ private:
 
     void printAdornedRules() {
         std::cout << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
         std::cout << "Adorned Rules: " << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // set title color to white
         for (Rule& rule : adornedRules) {
             std::cout << "\t" << rule.__str__() << std::endl;
         }
@@ -507,7 +517,9 @@ private:
 
     void printAdornedHistory() {
         std::cout << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
         std::cout << "Adorned History: " << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // set title color to white
         for (string adorned : adornedHistory) {
             std::cout << adorned << std::endl;
         }
@@ -515,13 +527,17 @@ private:
 
     void printOriginalQuery(Literal Q) {
         std::cout << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
         std::cout << "Original Query: " << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // set title color to white
         std::cout << "\t" << Q.__str__() << std::endl;
     }
 
     void printOriginalProgram(vector<Rule> P) {
         std::cout << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
         std::cout << "Original Program: " << std::endl;
+        SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // set title color to white
         for (Rule& rule : P) {
             std::cout << "\t" << rule.__str__() << std::endl;
         }
