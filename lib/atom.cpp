@@ -89,6 +89,8 @@ string Atom::__str__()
     {
         if (this->entity.size() > 0)
             return Atom::isMagic_to_string() + this->predicate + Atom::bflist_to_string() + "(" + Term::termlist_to_str(this->entity) + ")";
+        if(this->bflist.size() > 0)
+            return Atom::isMagic_to_string() + this->predicate + Atom::bflist_to_string();
         else
             return Atom::isMagic_to_string() + this->predicate;
     }
