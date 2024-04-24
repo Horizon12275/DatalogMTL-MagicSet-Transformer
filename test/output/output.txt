@@ -18,5 +18,5 @@ Magic Fact:
 
 Magic Program: 
 	magic_path_bb(Z,Y):-magic_path_bb(X,Y), edge(X,Z)
-	path_bb(X,Y):-magic_path_bb(X,Y), edge(X,Y)
-	path_bb(X,Y):-magic_path_bb(X,Y), edge(X,Z), path_bb(Z,Y)
+	path(X,Y):-magic_path_bb(X,Y), edge(X,Y)
+	path(X,Y):-magic_path_bb(X,Y), edge(X,Z), path(Z,Y)
