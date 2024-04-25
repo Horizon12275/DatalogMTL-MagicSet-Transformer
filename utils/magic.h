@@ -76,7 +76,7 @@ public:
         // print results
         printOriginalQuery(Q);
         printOriginalProgram(P);
-        printAdornedRules();
+        //printAdornedRules();
         printMagicFact();
         printMagicProgram();
 

@@ -1,0 +1,19 @@
+### You can change this directory
+
+T1 to magic
+	input
+	D:\Horizon\SJTU\Projects\ongoing\DatalogMTL-MagicSet-Transformer\test\input\T1.txt
+	output
+	D:\Horizon\SJTU\Projects\ongoing\DatalogMTL-MagicSet-Transformer\test\output\T1_magic.txt
+
+T2 to magic
+	input
+	D:\Horizon\SJTU\Projects\ongoing\DatalogMTL-MagicSet-Transformer\test\input\T2.txt
+	output
+	D:\Horizon\SJTU\Projects\ongoing\DatalogMTL-MagicSet-Transformer\test\output\T2_magic.txt
+
+T3 to magic
+	input
+	D:\Horizon\SJTU\Projects\ongoing\DatalogMTL-MagicSet-Transformer\test\input\T3.txt
+	output
+	D:\Horizon\SJTU\Projects\ongoing\DatalogMTL-MagicSet-Transformer\test\output\T3_magic.txt
