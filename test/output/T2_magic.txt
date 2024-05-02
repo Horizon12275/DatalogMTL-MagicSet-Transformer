@@ -258,7 +258,7 @@ Adorned Rules:
 	a1:memberOf_bf(X,Y):-a1:worksFor_bf(X,Y)
 
 Magic Fact: 
-	magic_a1:ResearchAssistantCandidate_b(http://www.department0.university0.edu/undergraduatestudent100)
+	magic_a1:ResearchAssistantCandidate_b(http://www.department0.university0.edu/graduatestudent2)
 
 Magic Program: 
 	Boxplus[0.000000,2.000000]magic_a1:TeachingAssistant_b(X):-magic_a1:ResearchAssistantCandidate_b(X)
