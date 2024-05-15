@@ -50,7 +50,7 @@ public:
 
 class BinaryLiteral: public Base {
 public:
-    Atom left_atom;
+   Atom left_atom;
     Atom right_atom;
     Operator op;
 

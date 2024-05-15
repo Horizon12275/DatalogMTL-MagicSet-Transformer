@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <conio.h>
 #include "rule.h"
+#include <atom.h>
 
 extern HANDLE hConsole;
 
@@ -358,6 +359,39 @@ private:
         clearTermWithf(atom);
     }
 
+    void MagicBody2HeadForBinary(BinaryLiteral& binaryLiteral, vector<Literal> &list) {
+        string op_name;
+
+        if (binaryLiteral.get_op_name() == "Since")
+            op_name = "Boxminus";
+        else 
+            op_name = "Boxplus";
+
+		Literal l;
+		l.atom = binaryLiteral.left_atom;
+		l.atom.isMagic = true;
+		l.operators[0].name = op_name;
+        l.operators[0].interval = binaryLiteral.op.interval;
+
+		Atom* atom = &(l.atom);
+		clearTermWithf(atom);
+		list.push_back(l);
+
+		Literal r;
+		r.atom = binaryLiteral.right_atom;
+		r.atom.isMagic = true;
+		r.operators[0].name = op_name;
+
+        Interval new_interval = binaryLiteral.op.interval;
+        new_interval.left_value = 0;
+        new_interval.left_open = true;
+        r.operators[0].interval = new_interval;
+
+        Atom* atom2 = &(r.atom);
+        clearTermWithf(atom2);
+        list.push_back(r);
+	}
+
     void pushBasePtrToRuleBody(Rule& rule, Base* basePtr) {
 		if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
 			Atom* new_atom = new Atom(*atomPtr);
@@ -424,6 +458,32 @@ private:
                     }
 
                     generated_rules.push_back(new_rule);
+                }
+            }
+            else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
+                if (IDBList.find(binaryLiteralPtr->left_atom.predicate) != IDBList.end() 
+                    || IDBList.find(binaryLiteralPtr->right_atom.predicate) != IDBList.end()) {
+                    vector<Literal> list;
+                    MagicBody2HeadForBinary(*binaryLiteralPtr, list);
+
+                    //cout << "IDB: " << literalPtr->atom.predicate << endl;
+                    for (Literal& literal : list) {
+                        Rule new_rule;
+						new_rule.head = Literal(literal.atom);
+						new_rule.head.operators = literal.operators;
+
+						Literal *new_body_head = new Literal(adorned_rule.head);
+						MagicHead2Body(*new_body_head);
+						new_rule.body.push_back(new_body_head);
+						
+						// copy the body of the adorned rule (already scaned literals or atoms)
+						for(int j = 0; j < i; j++) {
+							Base* basePtr = adorned_rule.body[j];
+							pushBasePtrToRuleBody(new_rule, basePtr);
+						}
+
+						generated_rules.push_back(new_rule);
+                    }
                 }
             }
         }
