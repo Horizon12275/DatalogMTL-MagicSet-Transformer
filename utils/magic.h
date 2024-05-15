@@ -370,8 +370,12 @@ private:
 		Literal l;
 		l.atom = binaryLiteral.left_atom;
 		l.atom.isMagic = true;
-		l.operators[0].name = op_name;
-        l.operators[0].interval = binaryLiteral.op.interval;
+
+        Interval new_interval = binaryLiteral.op.interval;
+        new_interval.left_value = 0;
+        new_interval.left_open = false;
+        Operator LOp = Operator(op_name, new_interval);
+		l.operators.push_back(LOp);
 
 		Atom* atom = &(l.atom);
 		clearTermWithf(atom);
@@ -380,12 +384,9 @@ private:
 		Literal r;
 		r.atom = binaryLiteral.right_atom;
 		r.atom.isMagic = true;
-		r.operators[0].name = op_name;
 
-        Interval new_interval = binaryLiteral.op.interval;
-        new_interval.left_value = 0;
-        new_interval.left_open = true;
-        r.operators[0].interval = new_interval;
+        Operator ROp = Operator(op_name, binaryLiteral.op.interval);
+        r.operators.push_back(ROp);
 
         Atom* atom2 = &(r.atom);
         clearTermWithf(atom2);
