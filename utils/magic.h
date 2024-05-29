@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <conio.h>
 #include "rule.h"
+#include <atom.h>
 
 extern HANDLE hConsole;
 
@@ -108,6 +109,38 @@ private:
         //printMagicFact();
     }
 
+    void adornAtom(Atom* atomPtr, set<string>& appearedTerms)
+    {
+        //cout << "Atom: " << atomPtr->__str__() << endl;
+        //atomPtr->predicate = atomPtr->predicate + "_";
+        for (Term& term : atomPtr->entity)
+        {
+            if (appearedTerms.find(term.name) != appearedTerms.end())
+            {
+                atomPtr->bflist.push_back('b');
+                //atomPtr->predicate += "b";
+            }
+            else
+            {
+                atomPtr->bflist.push_back('f');
+                //atomPtr->predicate += "f";
+            }
+        }
+
+        // before insert into adornedHistory, we need to revise the type of term in the literal according to its bfList
+        for (int i = 0; i < atomPtr->entity.size(); i++)
+        {
+            if (atomPtr->bflist[i] == 'b')
+            {
+                atomPtr->entity[i].set_type("constant");
+            }
+            else
+            {
+                atomPtr->entity[i].set_type("variable");
+            }
+        }
+	}
+
     Rule Adorn(Rule r, Literal pAlpha, stack<Literal> &S)
     {
         Rule adornedRule; // used to record the adorned rule
@@ -169,43 +202,15 @@ private:
         //after checking an atom or a literal, add all the terms in it to the appearedTerms set
         for (int i = 0; i < adornedRule.body.size(); i++)
         {
-            Base *basePtr = adornedRule.body[i]; // get the pointer of the base in the body
-            if (Atom *atomPtr = dynamic_cast<Atom *>(basePtr))
+            Base* basePtr = adornedRule.body[i]; // get the pointer of the base in the body
+            if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr))
             {                                // check if the pointer points to Atom or Literal, and do the corresponding type conversion
-                //cout << "Atom: " << atomPtr->__str__() << endl;
-
-                //atomPtr->predicate = atomPtr->predicate + "_";
-                for (Term &term : atomPtr->entity)
-                {
-                    if (appearedTerms.find(term.name) != appearedTerms.end())
-                    {
-                        atomPtr->bflist.push_back('b');
-                        //atomPtr->predicate += "b";
-                    }
-                    else
-                    {
-                        atomPtr->bflist.push_back('f');
-                        //atomPtr->predicate += "f";
-                    }
-                }
-
-                // before insert into adornedHistory, we need to revise the type of term in the literal according to its bfList
-                for (int i = 0; i < atomPtr->entity.size(); i++)
-                {
-                    if (atomPtr->bflist[i] == 'b')
-                    {
-                        atomPtr->entity[i].set_type("constant");
-                    }
-                    else
-                    {
-                        atomPtr->entity[i].set_type("variable");
-                    }
-                }
+                adornAtom(atomPtr, appearedTerms); 
                 S.push(Literal(*atomPtr));
                 //adornedHistory.insert(atomPtr->__str__());
                 //printAdornedHistory();
 
-                for (Term &term : atomPtr->entity)
+                for (Term& term : atomPtr->entity)
                 {
                     appearedTerms.insert(term.name);
                 }
@@ -217,38 +222,10 @@ private:
                     if ((atomPtr->bflist)[i] == 'b')
                         appearedTerms.insert(term.name);
                 }*/
-
             }
-            else if (Literal *literalPtr = dynamic_cast<Literal *>(basePtr))
-            {                               // check if the pointer points to Atom or Literal, and do the corresponding type conversion
-                //cout << "Literal: " << literalPtr->__str__() << endl;
-                //literalPtr->atom.predicate = literalPtr->atom.predicate + "_";
-                for (Term &term : literalPtr->atom.entity)
-                {
-                    if (appearedTerms.find(term.name) != appearedTerms.end())
-                    {
-                        literalPtr->atom.bflist.push_back('b');
-                        //literalPtr->atom.predicate += "b";
-                    }
-                    else
-                    {
-                        literalPtr->atom.bflist.push_back('f');
-                        //literalPtr->atom.predicate += "f";
-                    }
-                }
-
-                // before insert into adornedHistory, we need to revise the type of term in the literal according to its bfList
-                for (int i = 0; i < literalPtr->atom.entity.size(); i++)
-                {
-                    if (literalPtr->atom.bflist[i] == 'b')
-                    {
-                        literalPtr->atom.entity[i].set_type("constant");
-                    }
-                    else
-                    {
-                        literalPtr->atom.entity[i].set_type("variable");
-                    }
-                }
+            else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr))
+            {                           
+                adornAtom(&(literalPtr->atom), appearedTerms);
                 S.push(*literalPtr);
                 //adornedHistory.insert(literalPtr->__str_without_interval__());
                 //printAdornedHistory();
@@ -266,6 +243,32 @@ private:
                         appearedTerms.insert(term.name);
                 }
 
+            }
+            else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr))
+            {
+                Atom* left_atom_ptr = &(binaryLiteralPtr->left_atom);
+                adornAtom(left_atom_ptr, appearedTerms);
+                S.push(Literal(*left_atom_ptr));
+
+                Atom* right_atom_ptr = &(binaryLiteralPtr->right_atom);
+                adornAtom(right_atom_ptr, appearedTerms);
+                S.push(Literal(*right_atom_ptr));
+
+                for (int i = 0; i < (binaryLiteralPtr->left_atom.entity).size(); i++)
+				{
+					Term term = (binaryLiteralPtr->left_atom.entity)[i];
+
+					if ((binaryLiteralPtr->left_atom.bflist)[i] == 'b')
+						appearedTerms.insert(term.name);
+				}
+
+                for (int i = 0; i < (binaryLiteralPtr->right_atom.entity).size(); i++)
+                {
+                    Term term = (binaryLiteralPtr->right_atom.entity)[i];
+
+					if ((binaryLiteralPtr->right_atom.bflist)[i] == 'b')
+						appearedTerms.insert(term.name);
+				}
             }
         }
 
@@ -356,6 +359,55 @@ private:
         clearTermWithf(atom);
     }
 
+    void MagicBody2HeadForBinary(BinaryLiteral& binaryLiteral, vector<Literal> &list) {
+        string op_name;
+
+        if (binaryLiteral.get_op_name() == "Since")
+            op_name = "Boxminus";
+        else 
+            op_name = "Boxplus";
+
+		Literal l;
+		l.atom = binaryLiteral.left_atom;
+		l.atom.isMagic = true;
+
+        Interval new_interval = binaryLiteral.op.interval;
+        new_interval.left_value = 0;
+        new_interval.left_open = false;
+        Operator LOp = Operator(op_name, new_interval);
+		l.operators.push_back(LOp);
+
+		Atom* atom = &(l.atom);
+		clearTermWithf(atom);
+		list.push_back(l);
+
+		Literal r;
+		r.atom = binaryLiteral.right_atom;
+		r.atom.isMagic = true;
+
+        Operator ROp = Operator(op_name, binaryLiteral.op.interval);
+        r.operators.push_back(ROp);
+
+        Atom* atom2 = &(r.atom);
+        clearTermWithf(atom2);
+        list.push_back(r);
+	}
+
+    void pushBasePtrToRuleBody(Rule& rule, Base* basePtr) {
+		if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
+			Atom* new_atom = new Atom(*atomPtr);
+			rule.body.push_back(new_atom);
+		}
+		else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
+			Literal* new_literal = new Literal(*literalPtr);
+			rule.body.push_back(new_literal);
+		}
+        else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
+			BinaryLiteral* new_binary_literal = new BinaryLiteral(*binaryLiteralPtr);
+			rule.body.push_back(new_binary_literal);
+		}
+	}
+
     vector<Rule> Generate(const Rule &adorned_rule)
     {
         vector<Rule> generated_rules;
@@ -382,13 +434,7 @@ private:
                     // copy the body of the adorned rule to the body of the new rule (already scaned literals or atoms)
                     for(int j = 0; j < i; j++) {
                         Base* basePtr = adorned_rule.body[j];
-                        if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
-                            Atom* new_atom = new Atom(*atomPtr);
-                            new_rule.body.push_back(new_atom);
-                        } else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
-                            Literal* new_literal = new Literal(*literalPtr);
-                            new_rule.body.push_back(new_literal);
-                        }
+                        pushBasePtrToRuleBody(new_rule, basePtr);
                     }
 
                     generated_rules.push_back(new_rule);
@@ -409,16 +455,36 @@ private:
                     // copy the body of the adorned rule (already scaned literals or atoms)
                     for(int j = 0; j < i; j++) {
                         Base* basePtr = adorned_rule.body[j];
-                        if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
-                            Atom* new_atom = new Atom(*atomPtr);
-                            new_rule.body.push_back(new_atom);
-                        } else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
-                            Literal* new_literal = new Literal(*literalPtr);
-                            new_rule.body.push_back(new_literal);
-                        }
+                        pushBasePtrToRuleBody(new_rule, basePtr);
                     }
 
                     generated_rules.push_back(new_rule);
+                }
+            }
+            else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
+                if (IDBList.find(binaryLiteralPtr->left_atom.predicate) != IDBList.end() 
+                    || IDBList.find(binaryLiteralPtr->right_atom.predicate) != IDBList.end()) {
+                    vector<Literal> list;
+                    MagicBody2HeadForBinary(*binaryLiteralPtr, list);
+
+                    //cout << "IDB: " << literalPtr->atom.predicate << endl;
+                    for (Literal& literal : list) {
+                        Rule new_rule;
+						new_rule.head = Literal(literal.atom);
+						new_rule.head.operators = literal.operators;
+
+						Literal *new_body_head = new Literal(adorned_rule.head);
+						MagicHead2Body(*new_body_head);
+						new_rule.body.push_back(new_body_head);
+						
+						// copy the body of the adorned rule (already scaned literals or atoms)
+						for(int j = 0; j < i; j++) {
+							Base* basePtr = adorned_rule.body[j];
+							pushBasePtrToRuleBody(new_rule, basePtr);
+						}
+
+						generated_rules.push_back(new_rule);
+                    }
                 }
             }
         }
@@ -481,6 +547,12 @@ private:
                 new_literal->atom.bflist.clear();
                 modified_rule.body.push_back(new_literal);
             }
+            else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
+				BinaryLiteral* new_binary_literal = new BinaryLiteral(*binaryLiteralPtr);
+				new_binary_literal->left_atom.bflist.clear();
+				new_binary_literal->right_atom.bflist.clear();
+				modified_rule.body.push_back(new_binary_literal);
+			}
         }
         //cout << "Modified Rule: " << modified_rule.__str__() << endl;
         return modified_rule;
