@@ -11,7 +11,7 @@ vector<Rule> magicRules = magicSet.MS(query, ruleList);     // get the magic rul
 
 ## Configurations
 
-### Method
+### Method(need to install Microsoft Visual Studio AND CMake)
 
 1. mkdir build
 
@@ -24,3 +24,18 @@ vector<Rule> magicRules = magicSet.MS(query, ruleList);     // get the magic rul
 ### Tips
 
 1. Use a class diagram (provided by visual studio) to see the relationships of the classes in it.
+
+### File Input Mode
+
+```bash
+input path:
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\T2.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\T3.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\T4.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\T5.txt
+output path:
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T2.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T3.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T4.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T5.txt
+```
