@@ -416,7 +416,7 @@ private:
         // create a pointer to the body of the adorned rule, when the pointer points to an IDB rule,
         // then create a new rule, the head of the new rule is currently pointed atom or literal after magic(isMagic = true),
         // the first atom or literal in the new body is the head of the adorned rule after magic(isMagic = true),
-        // the rest of this generated rule's body contains all the atoms or literals ahead of the pointer (already scanned) in the body of the adorned rule
+        // the rest of this generated rule's body contains all the EDB atoms or literals ahead of the pointer (already scanned) in the body of the adorned rule
         for(int i = 0; i < adorned_rule.body.size(); i++) {
             Base* basePtr = adorned_rule.body[i];
             if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
@@ -629,6 +629,13 @@ private:
                     if (IDBList.find(literalPtr->atom.predicate) == IDBList.end()) {
                         literalPtr->atom.bflist.clear();
                     }
+                } else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
+                    if (IDBList.find(binaryLiteralPtr->left_atom.predicate) == IDBList.end()) {
+						binaryLiteralPtr->left_atom.bflist.clear();
+					}
+                    if (IDBList.find(binaryLiteralPtr->right_atom.predicate) == IDBList.end()) {
+						binaryLiteralPtr->right_atom.bflist.clear();
+					}
                 }
             }
         }
