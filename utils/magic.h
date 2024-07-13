@@ -352,7 +352,7 @@ private:
         clearTermWithf(atom);
     }
 
-    void MagicBody2HeadForBinary(BinaryLiteral& binaryLiteral, vector<Literal> &list) {
+    void MagicBody2HeadForBinary(BinaryLiteral& binaryLiteral, vector<Literal> &list, bool leftIsIDB, bool rightIsIDB){
         string op_name;
 
         if (binaryLiteral.get_op_name() == "Since")
@@ -360,30 +360,34 @@ private:
         else 
             op_name = "Boxplus";
 
-		Literal l;
-		l.atom = binaryLiteral.left_atom;
-		l.atom.isMagic = true;
+        if (leftIsIDB){
+            Literal l;
+            l.atom = binaryLiteral.left_atom;
+            l.atom.isMagic = true;
 
-        Interval new_interval = binaryLiteral.op.interval;
-        new_interval.left_value = 0;
-        new_interval.left_open = false;
-        Operator LOp = Operator(op_name, new_interval);
-		l.operators.push_back(LOp);
+            Interval new_interval = binaryLiteral.op.interval;
+            new_interval.left_value = 0;
+            new_interval.left_open = false;
+            Operator LOp = Operator(op_name, new_interval);
+            l.operators.push_back(LOp);
 
-		Atom* atom = &(l.atom);
-		clearTermWithf(atom);
-		list.push_back(l);
+            Atom* atom = &(l.atom);
+            clearTermWithf(atom);
+            list.push_back(l);
+        }
 
-		Literal r;
-		r.atom = binaryLiteral.right_atom;
-		r.atom.isMagic = true;
+        if (rightIsIDB) {
+            Literal r;
+            r.atom = binaryLiteral.right_atom;
+            r.atom.isMagic = true;
 
-        Operator ROp = Operator(op_name, binaryLiteral.op.interval);
-        r.operators.push_back(ROp);
+            Operator ROp = Operator(op_name, binaryLiteral.op.interval);
+            r.operators.push_back(ROp);
 
-        Atom* atom2 = &(r.atom);
-        clearTermWithf(atom2);
-        list.push_back(r);
+            Atom* atom2 = &(r.atom);
+            clearTermWithf(atom2);
+            list.push_back(r);
+        }
 	}
 
     void pushEDBBasePtrToRuleBody(Rule& rule, Base* basePtr) {
@@ -461,10 +465,11 @@ private:
                 }
             }
             else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
-                if (IDBList.find(binaryLiteralPtr->left_atom.predicate) != IDBList.end() 
-                    || IDBList.find(binaryLiteralPtr->right_atom.predicate) != IDBList.end()) {
+                bool leftIsIDB = IDBList.find(binaryLiteralPtr->left_atom.predicate) != IDBList.end();
+                bool rightIsIDB = IDBList.find(binaryLiteralPtr->right_atom.predicate) != IDBList.end();
+                if (leftIsIDB || rightIsIDB) {
                     vector<Literal> list;
-                    MagicBody2HeadForBinary(*binaryLiteralPtr, list);
+                    MagicBody2HeadForBinary(*binaryLiteralPtr, list, leftIsIDB, rightIsIDB);
 
                     //cout << "IDB: " << literalPtr->atom.predicate << endl;
                     for (Literal& literal : list) {
