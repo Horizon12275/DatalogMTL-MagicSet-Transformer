@@ -393,17 +393,18 @@ private:
         list.push_back(r);
 	}
 
-    void pushBasePtrToRuleBody(Rule& rule, Base* basePtr) {
-		if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
+    void pushEDBBasePtrToRuleBody(Rule& rule, Base* basePtr) {
+		if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr) && IDBList.find(atomPtr->predicate) == IDBList.end()) {
 			Atom* new_atom = new Atom(*atomPtr);
 			rule.body.push_back(new_atom);
 		}
-		else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
+		else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr) && IDBList.find(literalPtr->atom.predicate) == IDBList.end()) {
 			Literal* new_literal = new Literal(*literalPtr);
 			rule.body.push_back(new_literal);
 		}
-        else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
-			BinaryLiteral* new_binary_literal = new BinaryLiteral(*binaryLiteralPtr);
+        else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr) && 
+            (IDBList.find(binaryLiteralPtr->left_atom.predicate) == IDBList.end() && IDBList.find(binaryLiteralPtr->right_atom.predicate) == IDBList.end())) {
+            BinaryLiteral* new_binary_literal = new BinaryLiteral(*binaryLiteralPtr);
 			rule.body.push_back(new_binary_literal);
 		}
 	}
@@ -433,8 +434,10 @@ private:
                     
                     // copy the body of the adorned rule to the body of the new rule (already scaned literals or atoms)
                     for(int j = 0; j < i; j++) {
-                        Base* basePtr = adorned_rule.body[j];
-                        pushBasePtrToRuleBody(new_rule, basePtr);
+                        if (IDBList.find(adorned_rule.body[j]->get_predicate()) != IDBList.end()) {
+                            Base* basePtr = adorned_rule.body[j];
+                            pushEDBBasePtrToRuleBody(new_rule, basePtr);
+                        }
                     }
 
                     generated_rules.push_back(new_rule);
@@ -455,7 +458,7 @@ private:
                     // copy the body of the adorned rule (already scaned literals or atoms)
                     for(int j = 0; j < i; j++) {
                         Base* basePtr = adorned_rule.body[j];
-                        pushBasePtrToRuleBody(new_rule, basePtr);
+                        pushEDBBasePtrToRuleBody(new_rule, basePtr);
                     }
 
                     generated_rules.push_back(new_rule);
@@ -480,7 +483,7 @@ private:
 						// copy the body of the adorned rule (already scaned literals or atoms)
 						for(int j = 0; j < i; j++) {
 							Base* basePtr = adorned_rule.body[j];
-							pushBasePtrToRuleBody(new_rule, basePtr);
+							pushEDBBasePtrToRuleBody(new_rule, basePtr);
 						}
 
 						generated_rules.push_back(new_rule);
