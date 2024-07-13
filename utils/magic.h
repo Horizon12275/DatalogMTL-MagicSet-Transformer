@@ -141,6 +141,21 @@ private:
         }
 	}
 
+    void addTermsToAppearedTerms(Atom* atomPtr, set<string>& appearedTerms) {
+        if (IDBList.find(atomPtr->predicate) == IDBList.end()) {
+            for (Term& term : atomPtr->entity) {
+				appearedTerms.insert(term.name);
+			}
+		}
+        else {
+            for (int i = 0; i < atomPtr->entity.size(); i++) {
+				Term term = atomPtr->entity[i];
+				if (atomPtr->bflist[i] == 'b')
+					appearedTerms.insert(term.name);
+			}
+		}
+	}
+
     Rule Adorn(Rule r, Literal pAlpha, stack<Literal> &S)
     {
         Rule adornedRule; // used to record the adorned rule
@@ -210,21 +225,7 @@ private:
                 //adornedHistory.insert(atomPtr->__str__());
                 //printAdornedHistory();
 
-                if (IDBList.find(atomPtr->predicate) == IDBList.end())
-                {
-                    for (Term& term : atomPtr->entity)
-                        appearedTerms.insert(term.name);
-                }
-                else 
-                {
-                    for (int i = 0; i < (atomPtr->entity).size(); i++)
-                    {
-						Term term = atomPtr->entity[i];
-
-						if ((atomPtr->bflist)[i] == 'b')
-							appearedTerms.insert(term.name);
-					}
-                }
+                addTermsToAppearedTerms(atomPtr, appearedTerms);
 
                 /*for (int i = 0; i < (atomPtr->entity).size(); i++)
                 {
@@ -246,13 +247,7 @@ private:
                     appearedTerms.insert(term.name);
                 }*/
 
-                for (int i = 0; i < (literalPtr->atom.entity).size(); i++)
-                {
-                    Term term = (literalPtr->atom.entity)[i];
-
-                    if ((literalPtr->atom.bflist)[i] == 'b')
-                        appearedTerms.insert(term.name);
-                }
+                addTermsToAppearedTerms(&(literalPtr->atom), appearedTerms);
 
             }
             else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr))
@@ -265,21 +260,8 @@ private:
                 adornAtom(right_atom_ptr, appearedTerms);
                 S.push(Literal(*right_atom_ptr));
 
-                for (int i = 0; i < (binaryLiteralPtr->left_atom.entity).size(); i++)
-				{
-					Term term = (binaryLiteralPtr->left_atom.entity)[i];
-
-					if ((binaryLiteralPtr->left_atom.bflist)[i] == 'b')
-						appearedTerms.insert(term.name);
-				}
-
-                for (int i = 0; i < (binaryLiteralPtr->right_atom.entity).size(); i++)
-                {
-                    Term term = (binaryLiteralPtr->right_atom.entity)[i];
-
-					if ((binaryLiteralPtr->right_atom.bflist)[i] == 'b')
-						appearedTerms.insert(term.name);
-				}
+                addTermsToAppearedTerms(&(binaryLiteralPtr->left_atom), appearedTerms);
+                addTermsToAppearedTerms(&(binaryLiteralPtr->right_atom), appearedTerms);
             }
         }
 
@@ -405,18 +387,23 @@ private:
 	}
 
     void pushEDBBasePtrToRuleBody(Rule& rule, Base* basePtr) {
-		if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr) && IDBList.find(atomPtr->predicate) == IDBList.end()) {
-			Atom* new_atom = new Atom(*atomPtr);
-			rule.body.push_back(new_atom);
+		if (Atom* atomPtr = dynamic_cast<Atom*>(basePtr)) {
+            if (IDBList.find(atomPtr->predicate) == IDBList.end()) {
+                Atom* new_atom = new Atom(*atomPtr);
+                rule.body.push_back(new_atom);
+            }
 		}
-		else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr) && IDBList.find(literalPtr->atom.predicate) == IDBList.end()) {
-			Literal* new_literal = new Literal(*literalPtr);
-			rule.body.push_back(new_literal);
+		else if (Literal* literalPtr = dynamic_cast<Literal*>(basePtr)) {
+            if (IDBList.find(literalPtr->atom.predicate) == IDBList.end()) {
+                Literal* new_literal = new Literal(*literalPtr);
+                rule.body.push_back(new_literal);
+            }
 		}
-        else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr) && 
-            (IDBList.find(binaryLiteralPtr->left_atom.predicate) == IDBList.end() && IDBList.find(binaryLiteralPtr->right_atom.predicate) == IDBList.end())) {
-            BinaryLiteral* new_binary_literal = new BinaryLiteral(*binaryLiteralPtr);
-			rule.body.push_back(new_binary_literal);
+        else if (BinaryLiteral* binaryLiteralPtr = dynamic_cast<BinaryLiteral*>(basePtr)) {
+            if (IDBList.find(binaryLiteralPtr->left_atom.predicate) == IDBList.end() && IDBList.find(binaryLiteralPtr->right_atom.predicate) == IDBList.end()) {
+                BinaryLiteral* new_binary_literal = new BinaryLiteral(*binaryLiteralPtr);
+                rule.body.push_back(new_binary_literal);
+            }
 		}
 	}
 
@@ -445,10 +432,8 @@ private:
                     
                     // copy the body of the adorned rule to the body of the new rule (already scaned literals or atoms)
                     for(int j = 0; j < i; j++) {
-                        if (IDBList.find(adorned_rule.body[j]->get_predicate()) != IDBList.end()) {
-                            Base* basePtr = adorned_rule.body[j];
-                            pushEDBBasePtrToRuleBody(new_rule, basePtr);
-                        }
+                        Base* basePtr = adorned_rule.body[j];
+                        pushEDBBasePtrToRuleBody(new_rule, basePtr);
                     }
 
                     generated_rules.push_back(new_rule);

@@ -200,17 +200,17 @@ Magic Fact:
 
 Magic Program: 
 	Boxminus[1.000000,2.000000]magic_a1:memberOf_b(X):-magic_a1:SmartStudent_b(X)
-	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_b(X), Diamondminus[1.000000,2.000000]a1:memberOf_bf(X,Y), a1:UndergraduateStudent(X)
+	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_b(X), a1:UndergraduateStudent(X)
 	Boxminus[1.000000,3.000000]magic_a1:memberOf_b(X):-magic_a1:SmartStudent_b(X)
-	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_b(X), Diamondminus[1.000000,3.000000]a1:memberOf_bf(X,Y), a1:GraduateStudent(X)
+	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_b(X), a1:GraduateStudent(X)
 	Boxminus[0.000000,2.000000]magic_a1:worksFor_ff:-magic_a1:GoodDepartment_f
-	magic_a1:FullProfessor_f:-magic_a1:GoodDepartment_f, Boxminus[0.000000,2.000000]a1:worksFor_ff(X,Y)
+	magic_a1:FullProfessor_f:-magic_a1:GoodDepartment_f
 	Boxminus[0.000000,1.000000]magic_a1:memberOf_ff:-magic_a1:GoodDepartment_f
-	Boxplus[0.000000,2.000000]magic_a1:SmartStudent_f:-magic_a1:GoodDepartment_f, Diamondminus[0.000000,1.000000]a1:memberOf_ff(X,Y)
+	Boxplus[0.000000,2.000000]magic_a1:SmartStudent_f:-magic_a1:GoodDepartment_f
 	Boxminus[1.000000,2.000000]magic_a1:memberOf_ff:-magic_a1:SmartStudent_f
-	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_f, Diamondminus[1.000000,2.000000]a1:memberOf_ff(X,Y), a1:UndergraduateStudent(X)
+	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_f, a1:UndergraduateStudent(X)
 	Boxminus[1.000000,3.000000]magic_a1:memberOf_ff:-magic_a1:SmartStudent_f
-	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_f, Diamondminus[1.000000,3.000000]a1:memberOf_ff(X,Y), a1:GraduateStudent(X)
+	magic_a1:GoodDepartment_f:-magic_a1:SmartStudent_f, a1:GraduateStudent(X)
 	magic_a1:member_ff:-magic_a1:memberOf_ff
 	magic_a1:worksFor_ff:-magic_a1:memberOf_ff
 	magic_a1:memberOf_ff:-magic_a1:member_ff
