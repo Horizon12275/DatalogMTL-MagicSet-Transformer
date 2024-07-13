@@ -210,9 +210,20 @@ private:
                 //adornedHistory.insert(atomPtr->__str__());
                 //printAdornedHistory();
 
-                for (Term& term : atomPtr->entity)
+                if (IDBList.find(atomPtr->predicate) == IDBList.end())
                 {
-                    appearedTerms.insert(term.name);
+                    for (Term& term : atomPtr->entity)
+                        appearedTerms.insert(term.name);
+                }
+                else 
+                {
+                    for (int i = 0; i < (atomPtr->entity).size(); i++)
+                    {
+						Term term = atomPtr->entity[i];
+
+						if ((atomPtr->bflist)[i] == 'b')
+							appearedTerms.insert(term.name);
+					}
                 }
 
                 /*for (int i = 0; i < (atomPtr->entity).size(); i++)
