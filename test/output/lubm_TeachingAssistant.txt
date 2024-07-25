@@ -1,4 +1,4 @@
-Load Check:	ResearchAssistant(id7):-      Loaded!
+Load Check:	TeachingAssistant(id7):-      Loaded!
 Load Check:	LecturerCandidate(X):-publicationAuthor(Y,X)Since(0.000000,1.000000]Publication(Y), Boxminus[0.000000,1.000000]GraduateStudent(X)      Loaded!
 Load Check:	Lecturer(X):-publicationAuthor(Y,X)Until(0.000000,2.000000]LecturerCandidate(X)      Loaded!
 Load Check:	ResearchAssistantCandidate(X):-Boxminus[0.000000,5.000000]UndergraduateStudent(X)      Loaded!
@@ -86,7 +86,7 @@ Load Check:	Person(X):-Student(X)      Loaded!
 Load Check:	Person(X):-emailAddress(X,Y)      Loaded!
 
 Original Query: 
-	ResearchAssistant(id7)
+	TeachingAssistant(id7)
 
 Original Program: 
 	LecturerCandidate(X):-publicationAuthor(Y,X)Since(0.000000,1.000000]Publication(Y), Boxminus[0.000000,1.000000]GraduateStudent(X)
@@ -176,11 +176,6 @@ Original Program:
 	Person(X):-emailAddress(X,Y)
 
 Adorned Rules: 
-	ResearchAssistant_b(X):-Boxminus[0.000000,5.000000]ResearchAssistantCandidate_b(X)
-	ResearchAssistant_b(X):-publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate_b(X)
-	ResearchAssistantCandidate_b(X):-Boxminus[0.000000,5.000000]UndergraduateStudent(X)
-	ResearchAssistantCandidate_b(X):-Diamondminus[0.000000,2.000000]GraduateStudent(X)
-	ResearchAssistantCandidate_b(X):-Boxplus[0.000000,2.000000]TeachingAssistant_b(X)
 	TeachingAssistant_b(X):-Person_b(X), teachingAssistantOf(X,Y), Course_b(Y)
 	TeachingAssistant_b(X):-teachingAssistantOf(X,Y)
 	Course_b(Y):-teacherOf(X,Y)
@@ -205,6 +200,11 @@ Adorned Rules:
 	Student_b(X):-UndergraduateStudent(X)
 	Student_b(X):-Person_b(X), takesCourse(X,Y), Course_b(Y)
 	Chair_b(X):-Person_b(X), headOf(X,Y), Department(Y)
+	ResearchAssistant_b(X):-Boxminus[0.000000,5.000000]ResearchAssistantCandidate_b(X)
+	ResearchAssistant_b(X):-publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate_b(X)
+	ResearchAssistantCandidate_b(X):-Boxminus[0.000000,5.000000]UndergraduateStudent(X)
+	ResearchAssistantCandidate_b(X):-Diamondminus[0.000000,2.000000]GraduateStudent(X)
+	ResearchAssistantCandidate_b(X):-Boxplus[0.000000,2.000000]TeachingAssistant_b(X)
 	Employee_b(X):-Faculty_b(X)
 	Employee_b(X):-Person_b(X), worksFor_bf(X,Y), Organization_f(Y)
 	Organization_f(Y):-subOrganizationOf(X,Y)
@@ -265,12 +265,9 @@ Adorned Rules:
 	memberOf_bf(X,Y):-worksFor_bf(X,Y)
 
 Magic Fact: 
-	magic_ResearchAssistant_b(id7)
+	magic_TeachingAssistant_b(id7)
 
 Magic Program: 
-	Boxminus[0.000000,5.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X)
-	Boxminus[0.000000,1.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X), publicationAuthor(Y,X)
-	Boxplus[0.000000,2.000000]magic_TeachingAssistant_b(X):-magic_ResearchAssistantCandidate_b(X)
 	magic_Person_b(X):-magic_TeachingAssistant_b(X)
 	magic_Course_b(Y):-magic_TeachingAssistant_b(X), teachingAssistantOf(X,Y)
 	magic_member_b(Y):-magic_Person_b(Y)
@@ -284,6 +281,9 @@ Magic Program:
 	magic_Person_b(X):-magic_Student_b(X)
 	magic_Course_b(Y):-magic_Student_b(X), takesCourse(X,Y)
 	magic_Person_b(X):-magic_Chair_b(X)
+	Boxminus[0.000000,5.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X)
+	Boxminus[0.000000,1.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X), publicationAuthor(Y,X)
+	Boxplus[0.000000,2.000000]magic_TeachingAssistant_b(X):-magic_ResearchAssistantCandidate_b(X)
 	magic_Faculty_b(X):-magic_Employee_b(X)
 	magic_Person_b(X):-magic_Employee_b(X)
 	magic_worksFor_b(X):-magic_Employee_b(X)
@@ -322,11 +322,6 @@ Magic Program:
 	magic_memberOf_b(Y):-magic_member_b(Y)
 	magic_member_b(X):-magic_memberOf_b(X)
 	magic_worksFor_b(X):-magic_memberOf_b(X)
-	ResearchAssistant(X):-magic_ResearchAssistant_b(X), Boxminus[0.000000,5.000000]ResearchAssistantCandidate(X)
-	ResearchAssistant(X):-magic_ResearchAssistant_b(X), publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate(X)
-	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Boxminus[0.000000,5.000000]UndergraduateStudent(X)
-	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Diamondminus[0.000000,2.000000]GraduateStudent(X)
-	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Boxplus[0.000000,2.000000]TeachingAssistant(X)
 	TeachingAssistant(X):-magic_TeachingAssistant_b(X), Person(X), teachingAssistantOf(X,Y), Course(Y)
 	TeachingAssistant(X):-magic_TeachingAssistant_b(X), teachingAssistantOf(X,Y)
 	Course(Y):-magic_Course_b(Y), teacherOf(X,Y)
@@ -351,6 +346,11 @@ Magic Program:
 	Student(X):-magic_Student_b(X), UndergraduateStudent(X)
 	Student(X):-magic_Student_b(X), Person(X), takesCourse(X,Y), Course(Y)
 	Chair(X):-magic_Chair_b(X), Person(X), headOf(X,Y), Department(Y)
+	ResearchAssistant(X):-magic_ResearchAssistant_b(X), Boxminus[0.000000,5.000000]ResearchAssistantCandidate(X)
+	ResearchAssistant(X):-magic_ResearchAssistant_b(X), publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate(X)
+	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Boxminus[0.000000,5.000000]UndergraduateStudent(X)
+	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Diamondminus[0.000000,2.000000]GraduateStudent(X)
+	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Boxplus[0.000000,2.000000]TeachingAssistant(X)
 	Employee(X):-magic_Employee_b(X), Faculty(X)
 	Employee(X):-magic_Employee_b(X), Person(X), worksFor(X,Y), Organization(Y)
 	Organization(Y):-magic_Organization_f, subOrganizationOf(X,Y)
