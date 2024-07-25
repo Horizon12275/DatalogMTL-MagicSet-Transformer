@@ -1,0 +1,411 @@
+Load Check:	ResearchAssistant(id7):-      Loaded!
+Load Check:	LecturerCandidate(X):-publicationAuthor(Y,X)Since(0.000000,1.000000]Publication(Y), Boxminus[0.000000,1.000000]GraduateStudent(X)      Loaded!
+Load Check:	Lecturer(X):-publicationAuthor(Y,X)Until(0.000000,2.000000]LecturerCandidate(X)      Loaded!
+Load Check:	ResearchAssistantCandidate(X):-Boxminus[0.000000,5.000000]UndergraduateStudent(X)      Loaded!
+Load Check:	ResearchAssistantCandidate(X):-Diamondminus[0.000000,2.000000]GraduateStudent(X)      Loaded!
+Load Check:	ResearchAssistantCandidate(X):-Boxplus[0.000000,2.000000]TeachingAssistant(X)      Loaded!
+Load Check:	ResearchAssistant(X):-Boxminus[0.000000,5.000000]ResearchAssistantCandidate(X)      Loaded!
+Load Check:	ResearchAssistant(X):-publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate(X)      Loaded!
+Load Check:	LecturerCandidate(X):-Boxminus[0.000000,2.000000]ResearchAssistant(X)      Loaded!
+Load Check:	LecturerCandidate(X):-Boxminus[0.000000,4.000000]ResearchAssistantCandidate(X)      Loaded!
+Load Check:	Lecturer(X):-Boxplus[1.000000,5.000000]LecturerCandidate(X)      Loaded!
+Load Check:	AssistantProfessorCandidate(X):-Diamondminus[1.000000,3.000000]Lecturer(X)      Loaded!
+Load Check:	AssistantProfessorCandidate(X):-Diamondplus[0.000000,3.000000]publicationAuthor(Y,X), Boxminus[1.000000,2.000000]LecturerCandidate(X)      Loaded!
+Load Check:	AssistantProfessorCandidate(X):-Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]LecturerCandidate(X)      Loaded!
+Load Check:	AssociateProfessorCandidate(X):-Boxminus[1.000000,5.000000]AssistantProfessorCandidate(X)      Loaded!
+Load Check:	AssociateProfessorCandidate(X):-Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), publicationAuthor(Z,X), Boxminus[1.000000,3.000000]Lecturer(X)      Loaded!
+Load Check:	AssociateProfessorCandidate(X):-Boxminus[1.000000,3.000000]AssistantProfessor(X)      Loaded!
+Load Check:	AssociateProfessorCandidate(X):-doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]AssistantProfessorCandidate(X)      Loaded!
+Load Check:	AssociateProfessorCandidate(X):-Boxplus[1.000000,3.000000]AssistantProfessor(X)      Loaded!
+Load Check:	AssociateProfessor(X):-Diamondminus[1.000000,2.000000]AssociateProfessorCandidate(X)      Loaded!
+Load Check:	FullProfessorCandidate(X):-Diamondminus[0.000000,3.000000]publicationAuthor(Y,X), Boxplus[1.000000,2.000000]AssociateProfessorCandidate(X)      Loaded!
+Load Check:	FullProfessorCandidate(X):-Diamondminus[0.000000,3.000000]publicationAuthor(Y,X), Boxminus[1.000000,2.000000]AssociateProfessor(X)      Loaded!
+Load Check:	GoodDepartment(Y):-Boxminus[0.000000,2.000000]worksFor(X,Y), FullProfessor(X)      Loaded!
+Load Check:	SmartStudent(X):-Diamondminus[1.000000,2.000000]memberOf(X,Y), UndergraduateStudent(X), GoodDepartment(Y)      Loaded!
+Load Check:	SmartStudent(X):-Diamondminus[1.000000,3.000000]memberOf(X,Y), GraduateStudent(X), GoodDepartment(Y)      Loaded!
+Load Check:	GoodDepartment(Y):-Diamondminus[0.000000,1.000000]memberOf(X,Y), Boxplus[0.000000,2.000000]SmartStudent(X)      Loaded!
+Load Check:	ScientistCandidate(X):-Diamondminus[1.000000,2.000000]doctoralDegreeFrom(X,Y)      Loaded!
+Load Check:	Scientist(X):-Boxminus[0.000000,4.000000]ScientistCandidate(X)      Loaded!
+Load Check:	Scientist(X):-Diamondminus[1.000000,2.000000]FullProfessor(X)      Loaded!
+Load Check:	FullProfessor(X):-Diamondminus[1.000000,2.000000]Scientist(X)      Loaded!
+Load Check:	University(Y):-mastersDegreeFrom(X,Y)      Loaded!
+Load Check:	degreeFrom(X,Y):-hasAlumnus(Y,X)      Loaded!
+Load Check:	hasAlumnus(X,Y):-degreeFrom(Y,X)      Loaded!
+Load Check:	Employee(X):-Faculty(X)      Loaded!
+Load Check:	Faculty(X):-Professor(X)      Loaded!
+Load Check:	Professor(X):-AssociateProfessor(X)      Loaded!
+Load Check:	Person(Y):-member(X,Y)      Loaded!
+Load Check:	Professor(X):-AssistantProfessor(X)      Loaded!
+Load Check:	Professor(X):-Chair(X)      Loaded!
+Load Check:	worksFor(X,Y):-headOf(X,Y)      Loaded!
+Load Check:	Person(X):-degreeFrom(X,Y)      Loaded!
+Load Check:	University(Y):-degreeFrom(X,Y)      Loaded!
+Load Check:	Person(Y):-hasAlumnus(X,Y)      Loaded!
+Load Check:	TeachingAssistant(X):-Person(X), teachingAssistantOf(X,Y), Course(Y)      Loaded!
+Load Check:	Chair(X):-Person(X), headOf(X,Y), Department(Y)      Loaded!
+Load Check:	memberOf(X,Y):-member(Y,X)      Loaded!
+Load Check:	member(X,Y):-memberOf(Y,X)      Loaded!
+Load Check:	Course(Y):-teacherOf(X,Y)      Loaded!
+Load Check:	University(X):-hasAlumnus(X,Y)      Loaded!
+Load Check:	Person(X):-telephone(X,Y)      Loaded!
+Load Check:	Organization(Y):-subOrganizationOf(X,Y)      Loaded!
+Load Check:	memberOf(X,Y):-worksFor(X,Y)      Loaded!
+Load Check:	Person(X):-Employee(X)      Loaded!
+Load Check:	Person(X):-advisor(X,Y)      Loaded!
+Load Check:	Organization(X):-member(X,Y)      Loaded!
+Load Check:	Organization(X):-Department(X)      Loaded!
+Load Check:	Faculty(X):-Lecturer(X)      Loaded!
+Load Check:	Person(Y):-publicationAuthor(X,Y)      Loaded!
+Load Check:	Professor(Y):-advisor(X,Y)      Loaded!
+Load Check:	Work(X):-Course(X)      Loaded!
+Load Check:	Professor(X):-FullProfessor(X)      Loaded!
+Load Check:	degreeFrom(X,Y):-doctoralDegreeFrom(X,Y)      Loaded!
+Load Check:	TeachingAssistant(X):-teachingAssistantOf(X,Y)      Loaded!
+Load Check:	Person(X):-undergraduateDegreeFrom(X,Y)      Loaded!
+Load Check:	Organization(X):-University(X)      Loaded!
+Load Check:	Person(X):-doctoralDegreeFrom(X,Y)      Loaded!
+Load Check:	University(Y):-doctoralDegreeFrom(X,Y)      Loaded!
+Load Check:	Course(Y):-teachingAssistantOf(X,Y)      Loaded!
+Load Check:	University(Y):-undergraduateDegreeFrom(X,Y)      Loaded!
+Load Check:	degreeFrom(X,Y):-mastersDegreeFrom(X,Y)      Loaded!
+Load Check:	Person(X):-GraduateStudent(X)      Loaded!
+Load Check:	Person(X):-ResearchAssistant(X)      Loaded!
+Load Check:	Student(X):-UndergraduateStudent(X)      Loaded!
+Load Check:	degreeFrom(X,Y):-undergraduateDegreeFrom(X,Y)      Loaded!
+Load Check:	Publication(X):-publicationAuthor(X,Y)      Loaded!
+Load Check:	Person(X):-mastersDegreeFrom(X,Y)      Loaded!
+Load Check:	Organization(X):-ResearchGroup(X)      Loaded!
+Load Check:	Faculty(X):-teacherOf(X,Y)      Loaded!
+Load Check:	Person(X):-Chair(X)      Loaded!
+Load Check:	Employee(X):-Person(X), worksFor(X,Y), Organization(Y)      Loaded!
+Load Check:	Course(X):-GraduateCourse(X)      Loaded!
+Load Check:	Student(X):-Person(X), takesCourse(X,Y), Course(Y)      Loaded!
+Load Check:	Person(X):-TeachingAssistant(X)      Loaded!
+Load Check:	Organization(X):-subOrganizationOf(X,Y)      Loaded!
+Load Check:	Person(X):-Student(X)      Loaded!
+Load Check:	Person(X):-emailAddress(X,Y)      Loaded!
+
+Original Query: 
+	ResearchAssistant(id7)
+
+Original Program: 
+	LecturerCandidate(X):-publicationAuthor(Y,X)Since(0.000000,1.000000]Publication(Y), Boxminus[0.000000,1.000000]GraduateStudent(X)
+	Lecturer(X):-publicationAuthor(Y,X)Until(0.000000,2.000000]LecturerCandidate(X)
+	ResearchAssistantCandidate(X):-Boxminus[0.000000,5.000000]UndergraduateStudent(X)
+	ResearchAssistantCandidate(X):-Diamondminus[0.000000,2.000000]GraduateStudent(X)
+	ResearchAssistantCandidate(X):-Boxplus[0.000000,2.000000]TeachingAssistant(X)
+	ResearchAssistant(X):-Boxminus[0.000000,5.000000]ResearchAssistantCandidate(X)
+	ResearchAssistant(X):-publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate(X)
+	LecturerCandidate(X):-Boxminus[0.000000,2.000000]ResearchAssistant(X)
+	LecturerCandidate(X):-Boxminus[0.000000,4.000000]ResearchAssistantCandidate(X)
+	Lecturer(X):-Boxplus[1.000000,5.000000]LecturerCandidate(X)
+	AssistantProfessorCandidate(X):-Diamondminus[1.000000,3.000000]Lecturer(X)
+	AssistantProfessorCandidate(X):-Diamondplus[0.000000,3.000000]publicationAuthor(Y,X), Boxminus[1.000000,2.000000]LecturerCandidate(X)
+	AssistantProfessorCandidate(X):-Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]LecturerCandidate(X)
+	AssociateProfessorCandidate(X):-Boxminus[1.000000,5.000000]AssistantProfessorCandidate(X)
+	AssociateProfessorCandidate(X):-Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), publicationAuthor(Z,X), Boxminus[1.000000,3.000000]Lecturer(X)
+	AssociateProfessorCandidate(X):-Boxminus[1.000000,3.000000]AssistantProfessor(X)
+	AssociateProfessorCandidate(X):-doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]AssistantProfessorCandidate(X)
+	AssociateProfessorCandidate(X):-Boxplus[1.000000,3.000000]AssistantProfessor(X)
+	AssociateProfessor(X):-Diamondminus[1.000000,2.000000]AssociateProfessorCandidate(X)
+	FullProfessorCandidate(X):-Diamondminus[0.000000,3.000000]publicationAuthor(Y,X), Boxplus[1.000000,2.000000]AssociateProfessorCandidate(X)
+	FullProfessorCandidate(X):-Diamondminus[0.000000,3.000000]publicationAuthor(Y,X), Boxminus[1.000000,2.000000]AssociateProfessor(X)
+	GoodDepartment(Y):-Boxminus[0.000000,2.000000]worksFor(X,Y), FullProfessor(X)
+	SmartStudent(X):-Diamondminus[1.000000,2.000000]memberOf(X,Y), UndergraduateStudent(X), GoodDepartment(Y)
+	SmartStudent(X):-Diamondminus[1.000000,3.000000]memberOf(X,Y), GraduateStudent(X), GoodDepartment(Y)
+	GoodDepartment(Y):-Diamondminus[0.000000,1.000000]memberOf(X,Y), Boxplus[0.000000,2.000000]SmartStudent(X)
+	ScientistCandidate(X):-Diamondminus[1.000000,2.000000]doctoralDegreeFrom(X,Y)
+	Scientist(X):-Boxminus[0.000000,4.000000]ScientistCandidate(X)
+	Scientist(X):-Diamondminus[1.000000,2.000000]FullProfessor(X)
+	FullProfessor(X):-Diamondminus[1.000000,2.000000]Scientist(X)
+	University(Y):-mastersDegreeFrom(X,Y)
+	degreeFrom(X,Y):-hasAlumnus(Y,X)
+	hasAlumnus(X,Y):-degreeFrom(Y,X)
+	Employee(X):-Faculty(X)
+	Faculty(X):-Professor(X)
+	Professor(X):-AssociateProfessor(X)
+	Person(Y):-member(X,Y)
+	Professor(X):-AssistantProfessor(X)
+	Professor(X):-Chair(X)
+	worksFor(X,Y):-headOf(X,Y)
+	Person(X):-degreeFrom(X,Y)
+	University(Y):-degreeFrom(X,Y)
+	Person(Y):-hasAlumnus(X,Y)
+	TeachingAssistant(X):-Person(X), teachingAssistantOf(X,Y), Course(Y)
+	Chair(X):-Person(X), headOf(X,Y), Department(Y)
+	memberOf(X,Y):-member(Y,X)
+	member(X,Y):-memberOf(Y,X)
+	Course(Y):-teacherOf(X,Y)
+	University(X):-hasAlumnus(X,Y)
+	Person(X):-telephone(X,Y)
+	Organization(Y):-subOrganizationOf(X,Y)
+	memberOf(X,Y):-worksFor(X,Y)
+	Person(X):-Employee(X)
+	Person(X):-advisor(X,Y)
+	Organization(X):-member(X,Y)
+	Organization(X):-Department(X)
+	Faculty(X):-Lecturer(X)
+	Person(Y):-publicationAuthor(X,Y)
+	Professor(Y):-advisor(X,Y)
+	Work(X):-Course(X)
+	Professor(X):-FullProfessor(X)
+	degreeFrom(X,Y):-doctoralDegreeFrom(X,Y)
+	TeachingAssistant(X):-teachingAssistantOf(X,Y)
+	Person(X):-undergraduateDegreeFrom(X,Y)
+	Organization(X):-University(X)
+	Person(X):-doctoralDegreeFrom(X,Y)
+	University(Y):-doctoralDegreeFrom(X,Y)
+	Course(Y):-teachingAssistantOf(X,Y)
+	University(Y):-undergraduateDegreeFrom(X,Y)
+	degreeFrom(X,Y):-mastersDegreeFrom(X,Y)
+	Person(X):-GraduateStudent(X)
+	Person(X):-ResearchAssistant(X)
+	Student(X):-UndergraduateStudent(X)
+	degreeFrom(X,Y):-undergraduateDegreeFrom(X,Y)
+	Publication(X):-publicationAuthor(X,Y)
+	Person(X):-mastersDegreeFrom(X,Y)
+	Organization(X):-ResearchGroup(X)
+	Faculty(X):-teacherOf(X,Y)
+	Person(X):-Chair(X)
+	Employee(X):-Person(X), worksFor(X,Y), Organization(Y)
+	Course(X):-GraduateCourse(X)
+	Student(X):-Person(X), takesCourse(X,Y), Course(Y)
+	Person(X):-TeachingAssistant(X)
+	Organization(X):-subOrganizationOf(X,Y)
+	Person(X):-Student(X)
+	Person(X):-emailAddress(X,Y)
+
+Adorned Rules: 
+	ResearchAssistant_b(X):-Boxminus[0.000000,5.000000]ResearchAssistantCandidate_b(X)
+	ResearchAssistant_b(X):-publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate_b(X)
+	ResearchAssistantCandidate_b(X):-Boxminus[0.000000,5.000000]UndergraduateStudent(X)
+	ResearchAssistantCandidate_b(X):-Diamondminus[0.000000,2.000000]GraduateStudent(X)
+	ResearchAssistantCandidate_b(X):-Boxplus[0.000000,2.000000]TeachingAssistant_b(X)
+	TeachingAssistant_b(X):-Person_b(X), teachingAssistantOf(X,Y), Course_b(Y)
+	TeachingAssistant_b(X):-teachingAssistantOf(X,Y)
+	Course_b(Y):-teacherOf(X,Y)
+	Course_b(Y):-teachingAssistantOf(X,Y)
+	Course_b(X):-GraduateCourse(X)
+	Person_b(Y):-member_fb(X,Y)
+	Person_b(X):-degreeFrom_bf(X,Y)
+	Person_b(Y):-hasAlumnus_fb(X,Y)
+	Person_b(X):-telephone(X,Y)
+	Person_b(X):-Employee_b(X)
+	Person_b(X):-advisor(X,Y)
+	Person_b(Y):-publicationAuthor(X,Y)
+	Person_b(X):-undergraduateDegreeFrom(X,Y)
+	Person_b(X):-doctoralDegreeFrom(X,Y)
+	Person_b(X):-GraduateStudent(X)
+	Person_b(X):-ResearchAssistant_b(X)
+	Person_b(X):-mastersDegreeFrom(X,Y)
+	Person_b(X):-Chair_b(X)
+	Person_b(X):-TeachingAssistant_b(X)
+	Person_b(X):-Student_b(X)
+	Person_b(X):-emailAddress(X,Y)
+	Student_b(X):-UndergraduateStudent(X)
+	Student_b(X):-Person_b(X), takesCourse(X,Y), Course_b(Y)
+	Chair_b(X):-Person_b(X), headOf(X,Y), Department(Y)
+	Employee_b(X):-Faculty_b(X)
+	Employee_b(X):-Person_b(X), worksFor_bf(X,Y), Organization_f(Y)
+	Organization_f(Y):-subOrganizationOf(X,Y)
+	Organization_f(X):-member_ff(X,Y)
+	Organization_f(X):-Department(X)
+	Organization_f(X):-University_f(X)
+	Organization_f(X):-ResearchGroup(X)
+	Organization_f(X):-subOrganizationOf(X,Y)
+	University_f(Y):-mastersDegreeFrom(X,Y)
+	University_f(Y):-degreeFrom_ff(X,Y)
+	University_f(X):-hasAlumnus_ff(X,Y)
+	University_f(Y):-doctoralDegreeFrom(X,Y)
+	University_f(Y):-undergraduateDegreeFrom(X,Y)
+	hasAlumnus_ff(X,Y):-degreeFrom_ff(Y,X)
+	degreeFrom_ff(X,Y):-hasAlumnus_ff(Y,X)
+	degreeFrom_ff(X,Y):-doctoralDegreeFrom(X,Y)
+	degreeFrom_ff(X,Y):-mastersDegreeFrom(X,Y)
+	degreeFrom_ff(X,Y):-undergraduateDegreeFrom(X,Y)
+	member_ff(X,Y):-memberOf_ff(Y,X)
+	memberOf_ff(X,Y):-member_ff(Y,X)
+	memberOf_ff(X,Y):-worksFor_ff(X,Y)
+	worksFor_ff(X,Y):-headOf(X,Y)
+	worksFor_bf(X,Y):-headOf(X,Y)
+	Faculty_b(X):-Professor_b(X)
+	Faculty_b(X):-Lecturer_b(X)
+	Faculty_b(X):-teacherOf(X,Y)
+	Lecturer_b(X):-publicationAuthor(Y,X)Until(0.000000,2.000000]LecturerCandidate_b(X)
+	Lecturer_b(X):-Boxplus[1.000000,5.000000]LecturerCandidate_b(X)
+	LecturerCandidate_b(X):-publicationAuthor(Y,X)Since(0.000000,1.000000]Publication_f(Y), Boxminus[0.000000,1.000000]GraduateStudent(X)
+	LecturerCandidate_b(X):-Boxminus[0.000000,2.000000]ResearchAssistant_b(X)
+	LecturerCandidate_b(X):-Boxminus[0.000000,4.000000]ResearchAssistantCandidate_b(X)
+	Publication_f(X):-publicationAuthor(X,Y)
+	Professor_b(X):-AssociateProfessor_b(X)
+	Professor_b(X):-AssistantProfessor(X)
+	Professor_b(X):-Chair_b(X)
+	Professor_b(Y):-advisor(X,Y)
+	Professor_b(X):-FullProfessor_b(X)
+	FullProfessor_b(X):-Diamondminus[1.000000,2.000000]Scientist_b(X)
+	Scientist_b(X):-Boxminus[0.000000,4.000000]ScientistCandidate_b(X)
+	Scientist_b(X):-Diamondminus[1.000000,2.000000]FullProfessor_b(X)
+	ScientistCandidate_b(X):-Diamondminus[1.000000,2.000000]doctoralDegreeFrom(X,Y)
+	AssociateProfessor_b(X):-Diamondminus[1.000000,2.000000]AssociateProfessorCandidate_b(X)
+	AssociateProfessorCandidate_b(X):-Boxminus[1.000000,5.000000]AssistantProfessorCandidate_b(X)
+	AssociateProfessorCandidate_b(X):-Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), publicationAuthor(Z,X), Boxminus[1.000000,3.000000]Lecturer_b(X)
+	AssociateProfessorCandidate_b(X):-Boxminus[1.000000,3.000000]AssistantProfessor(X)
+	AssociateProfessorCandidate_b(X):-doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]AssistantProfessorCandidate_b(X)
+	AssociateProfessorCandidate_b(X):-Boxplus[1.000000,3.000000]AssistantProfessor(X)
+	AssistantProfessorCandidate_b(X):-Diamondminus[1.000000,3.000000]Lecturer_b(X)
+	AssistantProfessorCandidate_b(X):-Diamondplus[0.000000,3.000000]publicationAuthor(Y,X), Boxminus[1.000000,2.000000]LecturerCandidate_b(X)
+	AssistantProfessorCandidate_b(X):-Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]LecturerCandidate_b(X)
+	hasAlumnus_fb(X,Y):-degreeFrom_bf(Y,X)
+	degreeFrom_bf(X,Y):-hasAlumnus_fb(Y,X)
+	degreeFrom_bf(X,Y):-doctoralDegreeFrom(X,Y)
+	degreeFrom_bf(X,Y):-mastersDegreeFrom(X,Y)
+	degreeFrom_bf(X,Y):-undergraduateDegreeFrom(X,Y)
+	member_fb(X,Y):-memberOf_bf(Y,X)
+	memberOf_bf(X,Y):-member_fb(Y,X)
+	memberOf_bf(X,Y):-worksFor_bf(X,Y)
+
+Magic Fact: 
+	magic_ResearchAssistant_b(id7)
+
+Magic Program: 
+	Boxminus[0.000000,5.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X)
+	Boxminus[0.000000,1.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X), publicationAuthor(Y,X)
+	Boxplus[0.000000,2.000000]magic_TeachingAssistant_b(X):-magic_ResearchAssistantCandidate_b(X)
+	magic_Person_b(X):-magic_TeachingAssistant_b(X)
+	magic_Course_b(Y):-magic_TeachingAssistant_b(X), teachingAssistantOf(X,Y)
+	magic_member_b(Y):-magic_Person_b(Y)
+	magic_degreeFrom_b(X):-magic_Person_b(X)
+	magic_hasAlumnus_b(Y):-magic_Person_b(Y)
+	magic_Employee_b(X):-magic_Person_b(X)
+	magic_ResearchAssistant_b(X):-magic_Person_b(X)
+	magic_Chair_b(X):-magic_Person_b(X)
+	magic_TeachingAssistant_b(X):-magic_Person_b(X)
+	magic_Student_b(X):-magic_Person_b(X)
+	magic_Person_b(X):-magic_Student_b(X)
+	magic_Course_b(Y):-magic_Student_b(X), takesCourse(X,Y)
+	magic_Person_b(X):-magic_Chair_b(X)
+	magic_Faculty_b(X):-magic_Employee_b(X)
+	magic_Person_b(X):-magic_Employee_b(X)
+	magic_worksFor_b(X):-magic_Employee_b(X)
+	magic_Organization_f:-magic_Employee_b(X)
+	magic_member_ff:-magic_Organization_f
+	magic_University_f:-magic_Organization_f
+	magic_degreeFrom_ff:-magic_University_f
+	magic_hasAlumnus_ff:-magic_University_f
+	magic_degreeFrom_ff:-magic_hasAlumnus_ff
+	magic_hasAlumnus_ff:-magic_degreeFrom_ff
+	magic_memberOf_ff:-magic_member_ff
+	magic_member_ff:-magic_memberOf_ff
+	magic_worksFor_ff:-magic_memberOf_ff
+	magic_Professor_b(X):-magic_Faculty_b(X)
+	magic_Lecturer_b(X):-magic_Faculty_b(X)
+	Boxplus(0.000000,2.000000]magic_LecturerCandidate_b(X):-magic_Lecturer_b(X)
+	Boxplus[1.000000,5.000000]magic_LecturerCandidate_b(X):-magic_Lecturer_b(X)
+	Boxminus(0.000000,1.000000]magic_Publication_f:-magic_LecturerCandidate_b(X)
+	Boxminus[0.000000,2.000000]magic_ResearchAssistant_b(X):-magic_LecturerCandidate_b(X)
+	Boxminus[0.000000,4.000000]magic_ResearchAssistantCandidate_b(X):-magic_LecturerCandidate_b(X)
+	magic_AssociateProfessor_b(X):-magic_Professor_b(X)
+	magic_Chair_b(X):-magic_Professor_b(X)
+	magic_FullProfessor_b(X):-magic_Professor_b(X)
+	Boxminus[1.000000,2.000000]magic_Scientist_b(X):-magic_FullProfessor_b(X)
+	Boxminus[0.000000,4.000000]magic_ScientistCandidate_b(X):-magic_Scientist_b(X)
+	Boxminus[1.000000,2.000000]magic_FullProfessor_b(X):-magic_Scientist_b(X)
+	Boxminus[1.000000,2.000000]magic_AssociateProfessorCandidate_b(X):-magic_AssociateProfessor_b(X)
+	Boxminus[1.000000,5.000000]magic_AssistantProfessorCandidate_b(X):-magic_AssociateProfessorCandidate_b(X)
+	Boxminus[1.000000,3.000000]magic_Lecturer_b(X):-magic_AssociateProfessorCandidate_b(X), Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), publicationAuthor(Z,X)
+	Boxminus[1.000000,2.000000]magic_AssistantProfessorCandidate_b(X):-magic_AssociateProfessorCandidate_b(X), doctoralDegreeFrom(X,Y)
+	Boxminus[1.000000,3.000000]magic_Lecturer_b(X):-magic_AssistantProfessorCandidate_b(X)
+	Boxminus[1.000000,2.000000]magic_LecturerCandidate_b(X):-magic_AssistantProfessorCandidate_b(X), Diamondplus[0.000000,3.000000]publicationAuthor(Y,X)
+	Boxminus[1.000000,2.000000]magic_LecturerCandidate_b(X):-magic_AssistantProfessorCandidate_b(X), Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y)
+	magic_degreeFrom_b(Y):-magic_hasAlumnus_b(Y)
+	magic_hasAlumnus_b(X):-magic_degreeFrom_b(X)
+	magic_memberOf_b(Y):-magic_member_b(Y)
+	magic_member_b(X):-magic_memberOf_b(X)
+	magic_worksFor_b(X):-magic_memberOf_b(X)
+	ResearchAssistant(X):-magic_ResearchAssistant_b(X), Boxminus[0.000000,5.000000]ResearchAssistantCandidate(X)
+	ResearchAssistant(X):-magic_ResearchAssistant_b(X), publicationAuthor(Y,X), Boxminus[0.000000,1.000000]ResearchAssistantCandidate(X)
+	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Boxminus[0.000000,5.000000]UndergraduateStudent(X)
+	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Diamondminus[0.000000,2.000000]GraduateStudent(X)
+	ResearchAssistantCandidate(X):-magic_ResearchAssistantCandidate_b(X), Boxplus[0.000000,2.000000]TeachingAssistant(X)
+	TeachingAssistant(X):-magic_TeachingAssistant_b(X), Person(X), teachingAssistantOf(X,Y), Course(Y)
+	TeachingAssistant(X):-magic_TeachingAssistant_b(X), teachingAssistantOf(X,Y)
+	Course(Y):-magic_Course_b(Y), teacherOf(X,Y)
+	Course(Y):-magic_Course_b(Y), teachingAssistantOf(X,Y)
+	Course(X):-magic_Course_b(X), GraduateCourse(X)
+	Person(Y):-magic_Person_b(Y), member(X,Y)
+	Person(X):-magic_Person_b(X), degreeFrom(X,Y)
+	Person(Y):-magic_Person_b(Y), hasAlumnus(X,Y)
+	Person(X):-magic_Person_b(X), telephone(X,Y)
+	Person(X):-magic_Person_b(X), Employee(X)
+	Person(X):-magic_Person_b(X), advisor(X,Y)
+	Person(Y):-magic_Person_b(Y), publicationAuthor(X,Y)
+	Person(X):-magic_Person_b(X), undergraduateDegreeFrom(X,Y)
+	Person(X):-magic_Person_b(X), doctoralDegreeFrom(X,Y)
+	Person(X):-magic_Person_b(X), GraduateStudent(X)
+	Person(X):-magic_Person_b(X), ResearchAssistant(X)
+	Person(X):-magic_Person_b(X), mastersDegreeFrom(X,Y)
+	Person(X):-magic_Person_b(X), Chair(X)
+	Person(X):-magic_Person_b(X), TeachingAssistant(X)
+	Person(X):-magic_Person_b(X), Student(X)
+	Person(X):-magic_Person_b(X), emailAddress(X,Y)
+	Student(X):-magic_Student_b(X), UndergraduateStudent(X)
+	Student(X):-magic_Student_b(X), Person(X), takesCourse(X,Y), Course(Y)
+	Chair(X):-magic_Chair_b(X), Person(X), headOf(X,Y), Department(Y)
+	Employee(X):-magic_Employee_b(X), Faculty(X)
+	Employee(X):-magic_Employee_b(X), Person(X), worksFor(X,Y), Organization(Y)
+	Organization(Y):-magic_Organization_f, subOrganizationOf(X,Y)
+	Organization(X):-magic_Organization_f, member(X,Y)
+	Organization(X):-magic_Organization_f, Department(X)
+	Organization(X):-magic_Organization_f, University(X)
+	Organization(X):-magic_Organization_f, ResearchGroup(X)
+	Organization(X):-magic_Organization_f, subOrganizationOf(X,Y)
+	University(Y):-magic_University_f, mastersDegreeFrom(X,Y)
+	University(Y):-magic_University_f, degreeFrom(X,Y)
+	University(X):-magic_University_f, hasAlumnus(X,Y)
+	University(Y):-magic_University_f, doctoralDegreeFrom(X,Y)
+	University(Y):-magic_University_f, undergraduateDegreeFrom(X,Y)
+	hasAlumnus(X,Y):-magic_hasAlumnus_ff, degreeFrom(Y,X)
+	degreeFrom(X,Y):-magic_degreeFrom_ff, hasAlumnus(Y,X)
+	degreeFrom(X,Y):-magic_degreeFrom_ff, doctoralDegreeFrom(X,Y)
+	degreeFrom(X,Y):-magic_degreeFrom_ff, mastersDegreeFrom(X,Y)
+	degreeFrom(X,Y):-magic_degreeFrom_ff, undergraduateDegreeFrom(X,Y)
+	member(X,Y):-magic_member_ff, memberOf(Y,X)
+	memberOf(X,Y):-magic_memberOf_ff, member(Y,X)
+	memberOf(X,Y):-magic_memberOf_ff, worksFor(X,Y)
+	worksFor(X,Y):-magic_worksFor_ff, headOf(X,Y)
+	worksFor(X,Y):-magic_worksFor_b(X), headOf(X,Y)
+	Faculty(X):-magic_Faculty_b(X), Professor(X)
+	Faculty(X):-magic_Faculty_b(X), Lecturer(X)
+	Faculty(X):-magic_Faculty_b(X), teacherOf(X,Y)
+	Lecturer(X):-magic_Lecturer_b(X), publicationAuthor(Y,X)Until(0.000000,2.000000]LecturerCandidate(X)
+	Lecturer(X):-magic_Lecturer_b(X), Boxplus[1.000000,5.000000]LecturerCandidate(X)
+	LecturerCandidate(X):-magic_LecturerCandidate_b(X), publicationAuthor(Y,X)Since(0.000000,1.000000]Publication(Y), Boxminus[0.000000,1.000000]GraduateStudent(X)
+	LecturerCandidate(X):-magic_LecturerCandidate_b(X), Boxminus[0.000000,2.000000]ResearchAssistant(X)
+	LecturerCandidate(X):-magic_LecturerCandidate_b(X), Boxminus[0.000000,4.000000]ResearchAssistantCandidate(X)
+	Publication(X):-magic_Publication_f, publicationAuthor(X,Y)
+	Professor(X):-magic_Professor_b(X), AssociateProfessor(X)
+	Professor(X):-magic_Professor_b(X), AssistantProfessor(X)
+	Professor(X):-magic_Professor_b(X), Chair(X)
+	Professor(Y):-magic_Professor_b(Y), advisor(X,Y)
+	Professor(X):-magic_Professor_b(X), FullProfessor(X)
+	FullProfessor(X):-magic_FullProfessor_b(X), Diamondminus[1.000000,2.000000]Scientist(X)
+	Scientist(X):-magic_Scientist_b(X), Boxminus[0.000000,4.000000]ScientistCandidate(X)
+	Scientist(X):-magic_Scientist_b(X), Diamondminus[1.000000,2.000000]FullProfessor(X)
+	ScientistCandidate(X):-magic_ScientistCandidate_b(X), Diamondminus[1.000000,2.000000]doctoralDegreeFrom(X,Y)
+	AssociateProfessor(X):-magic_AssociateProfessor_b(X), Diamondminus[1.000000,2.000000]AssociateProfessorCandidate(X)
+	AssociateProfessorCandidate(X):-magic_AssociateProfessorCandidate_b(X), Boxminus[1.000000,5.000000]AssistantProfessorCandidate(X)
+	AssociateProfessorCandidate(X):-magic_AssociateProfessorCandidate_b(X), Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), publicationAuthor(Z,X), Boxminus[1.000000,3.000000]Lecturer(X)
+	AssociateProfessorCandidate(X):-magic_AssociateProfessorCandidate_b(X), Boxminus[1.000000,3.000000]AssistantProfessor(X)
+	AssociateProfessorCandidate(X):-magic_AssociateProfessorCandidate_b(X), doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]AssistantProfessorCandidate(X)
+	AssociateProfessorCandidate(X):-magic_AssociateProfessorCandidate_b(X), Boxplus[1.000000,3.000000]AssistantProfessor(X)
+	AssistantProfessorCandidate(X):-magic_AssistantProfessorCandidate_b(X), Diamondminus[1.000000,3.000000]Lecturer(X)
+	AssistantProfessorCandidate(X):-magic_AssistantProfessorCandidate_b(X), Diamondplus[0.000000,3.000000]publicationAuthor(Y,X), Boxminus[1.000000,2.000000]LecturerCandidate(X)
+	AssistantProfessorCandidate(X):-magic_AssistantProfessorCandidate_b(X), Diamondminus[0.000000,3.000000]doctoralDegreeFrom(X,Y), Boxminus[1.000000,2.000000]LecturerCandidate(X)
+	hasAlumnus(X,Y):-magic_hasAlumnus_b(Y), degreeFrom(Y,X)
+	degreeFrom(X,Y):-magic_degreeFrom_b(X), hasAlumnus(Y,X)
+	degreeFrom(X,Y):-magic_degreeFrom_b(X), doctoralDegreeFrom(X,Y)
+	degreeFrom(X,Y):-magic_degreeFrom_b(X), mastersDegreeFrom(X,Y)
+	degreeFrom(X,Y):-magic_degreeFrom_b(X), undergraduateDegreeFrom(X,Y)
+	member(X,Y):-magic_member_b(Y), memberOf(Y,X)
+	memberOf(X,Y):-magic_memberOf_b(X), member(Y,X)
+	memberOf(X,Y):-magic_memberOf_b(X), worksFor(X,Y)

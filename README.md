@@ -36,6 +36,9 @@ input path:
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_FullProfessor.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_SmartStudent.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_AssociateProfessor.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_LecturerCandidate.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_ResearchAssistant.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_ResearchAssistantCandidate.txt
 output path:
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T2.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T3.txt
@@ -44,4 +47,7 @@ output path:
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_FullProfessor.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_SmartStudent.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_AssociateProfessor.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_LecturerCandidate.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_ResearchAssistant.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_ResearchAssistantCandidate.txt
 ```
