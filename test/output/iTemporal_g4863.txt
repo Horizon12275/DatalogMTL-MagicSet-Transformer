@@ -4,7 +4,7 @@ Load Check:	g4860(N0,N1):-g4861(N1,N0)      Loaded!
 Load Check:	g4862(N0,N1):-Diamondplus[0.000000,10000.000000]g4869(N1,N0)      Loaded!
 Load Check:	g4863(N0,N1):-g4857(N1,N0)      Loaded!
 Load Check:	g4863(N0,N1):-g4866(N0,N1)      Loaded!
-Load Check:	g4864(N0,N1):-g4854(N0), g4856(N1)      Loaded!
+Load Check:	g4864(N0,N1):-g4854(N0), g4856(N1), g4857(N1,N2)      Loaded!
 Load Check:	g4866(N0,N1):-g4862(N1,N0), g4863(N0,N1)      Loaded!
 Load Check:	g4867(N0,N1):-g4858(N1,N0)      Loaded!
 Load Check:	g4867(N0,N1):-g4863(N0,N1)      Loaded!
@@ -20,7 +20,7 @@ Original Program:
 	g4862(N0,N1):-Diamondplus[0.000000,10000.000000]g4869(N1,N0)
 	g4863(N0,N1):-g4857(N1,N0)
 	g4863(N0,N1):-g4866(N0,N1)
-	g4864(N0,N1):-g4854(N0), g4856(N1)
+	g4864(N0,N1):-g4854(N0), g4856(N1), g4857(N1,N2)
 	g4866(N0,N1):-g4862(N1,N0), g4863(N0,N1)
 	g4867(N0,N1):-g4858(N1,N0)
 	g4867(N0,N1):-g4863(N0,N1)
@@ -33,7 +33,7 @@ Adorned Rules:
 	g4866_bb(N0,N1):-g4862_bb(N1,N0), g4863_bb(N0,N1)
 	g4862_bb(N0,N1):-Diamondplus[0.000000,10000.000000]g4869_bb(N1,N0)
 	g4869_bb(N0,N1):-g4855(N1,N0), g4864_bb(N0,N1)
-	g4864_bb(N0,N1):-g4854(N0), g4856(N1)
+	g4864_bb(N0,N1):-g4854(N0), g4856(N1), g4857(N1,N2)
 
 Magic Fact: 
 	magic_g4863_bb(n0,n1)
@@ -49,4 +49,4 @@ Magic Program:
 	g4866(N0,N1):-magic_g4866_bb(N0,N1), g4862(N1,N0), g4863(N0,N1)
 	g4862(N0,N1):-magic_g4862_bb(N0,N1), Diamondplus[0.000000,10000.000000]g4869(N1,N0)
 	g4869(N0,N1):-magic_g4869_bb(N0,N1), g4855(N1,N0), g4864(N0,N1)
-	g4864(N0,N1):-magic_g4864_bb(N0,N1), g4854(N0), g4856(N1)
+	g4864(N0,N1):-magic_g4864_bb(N0,N1), g4854(N0), g4856(N1), g4857(N1,N2)
