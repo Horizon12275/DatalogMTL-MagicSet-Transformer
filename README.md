@@ -39,6 +39,7 @@ input path:
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_LecturerCandidate.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_ResearchAssistant.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\lubm_ResearchAssistantCandidate.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\input\iTemporal_test.txt
 output path:
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T2.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\T3.txt
@@ -50,4 +51,5 @@ output path:
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_LecturerCandidate.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_ResearchAssistant.txt
     D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\lubm_ResearchAssistantCandidate.txt
+    D:\Horizon\Projects\Ongoing\DatalogMTL-MagicSet-Transformer\test\output\iTemporal_test.txt
 ```
