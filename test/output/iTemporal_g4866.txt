@@ -1,0 +1,52 @@
+Load Check:	g4866(N0,N1):-      Loaded!
+Load Check:	g4859(N0,N1):-Boxplus[0.000000,10000.000000]g4868(N1,N0)      Loaded!
+Load Check:	g4860(N0,N1):-g4861(N1,N0)      Loaded!
+Load Check:	g4862(N0,N1):-Diamondplus[0.000000,10000.000000]g4869(N1,N0)      Loaded!
+Load Check:	g4863(N0,N1):-g4857(N1,N0)      Loaded!
+Load Check:	g4863(N0,N1):-g4866(N0,N1)      Loaded!
+Load Check:	g4864(N0,N1):-g4854(N0), g4856(N1)      Loaded!
+Load Check:	g4866(N0,N1):-g4862(N1,N0), g4863(N0,N1)      Loaded!
+Load Check:	g4867(N0,N1):-g4858(N1,N0)      Loaded!
+Load Check:	g4867(N0,N1):-g4863(N0,N1)      Loaded!
+Load Check:	g4869(N0,N1):-g4855(N1,N0), g4864(N0,N1)      Loaded!
+Load Check:	g4901(N0,N1):-Diamondminus[1000.000000,10000.000000]g4867(N1,N0)      Loaded!
+
+Original Query: 
+	g4866(N0,N1)
+
+Original Program: 
+	g4859(N0,N1):-Boxplus[0.000000,10000.000000]g4868(N1,N0)
+	g4860(N0,N1):-g4861(N1,N0)
+	g4862(N0,N1):-Diamondplus[0.000000,10000.000000]g4869(N1,N0)
+	g4863(N0,N1):-g4857(N1,N0)
+	g4863(N0,N1):-g4866(N0,N1)
+	g4864(N0,N1):-g4854(N0), g4856(N1)
+	g4866(N0,N1):-g4862(N1,N0), g4863(N0,N1)
+	g4867(N0,N1):-g4858(N1,N0)
+	g4867(N0,N1):-g4863(N0,N1)
+	g4869(N0,N1):-g4855(N1,N0), g4864(N0,N1)
+	g4901(N0,N1):-Diamondminus[1000.000000,10000.000000]g4867(N1,N0)
+
+Adorned Rules: 
+	g4866_ff(N0,N1):-g4862_ff(N1,N0), g4863_ff(N0,N1)
+	g4863_ff(N0,N1):-g4857(N1,N0)
+	g4863_ff(N0,N1):-g4866_ff(N0,N1)
+	g4862_ff(N0,N1):-Diamondplus[0.000000,10000.000000]g4869_ff(N1,N0)
+	g4869_ff(N0,N1):-g4855(N1,N0), g4864_bb(N0,N1)
+	g4864_bb(N0,N1):-g4854(N0), g4856(N1)
+
+Magic Fact: 
+	magic_g4866_ff(N0,N1)
+
+Magic Program: 
+	magic_g4862_ff:-magic_g4866_ff
+	magic_g4863_ff:-magic_g4866_ff
+	magic_g4866_ff:-magic_g4863_ff
+	Boxplus[0.000000,10000.000000]magic_g4869_ff:-magic_g4862_ff
+	magic_g4864_bb(N0,N1):-magic_g4869_ff, g4855(N1,N0)
+	g4866(N0,N1):-magic_g4866_ff, g4862(N1,N0), g4863(N0,N1)
+	g4863(N0,N1):-magic_g4863_ff, g4857(N1,N0)
+	g4863(N0,N1):-magic_g4863_ff, g4866(N0,N1)
+	g4862(N0,N1):-magic_g4862_ff, Diamondplus[0.000000,10000.000000]g4869(N1,N0)
+	g4869(N0,N1):-magic_g4869_ff, g4855(N1,N0), g4864(N0,N1)
+	g4864(N0,N1):-magic_g4864_bb(N0,N1), g4854(N0), g4856(N1)
