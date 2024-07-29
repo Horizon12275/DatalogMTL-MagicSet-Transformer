@@ -40,7 +40,7 @@ Magic Fact:
 
 Magic Program: 
 	magic_g4862_bb(N1,N0):-magic_g4866_bb(N0,N1)
-	magic_g4863_bb(N0,N1):-magic_g4866_bb(N0,N1)
+	magic_g4863_bb(N0,N1):-magic_g4866_bb(N0,N1), g4862(N1,N0)
 	magic_g4866_bb(N0,N1):-magic_g4863_bb(N0,N1)
 	Boxplus[0.000000,10000.000000]magic_g4869_bb(N1,N0):-magic_g4862_bb(N0,N1)
 	magic_g4864_bb(N0,N1):-magic_g4869_bb(N0,N1), g4855(N1,N0)

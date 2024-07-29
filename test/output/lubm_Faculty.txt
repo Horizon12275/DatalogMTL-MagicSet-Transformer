@@ -277,7 +277,7 @@ Magic Program:
 	Boxminus[0.000000,4.000000]magic_ResearchAssistantCandidate_b(X):-magic_LecturerCandidate_b(X)
 	Boxplus[0.000000,2.000000]magic_TeachingAssistant_b(X):-magic_ResearchAssistantCandidate_b(X)
 	magic_Person_b(X):-magic_TeachingAssistant_b(X)
-	magic_Course_b(Y):-magic_TeachingAssistant_b(X), teachingAssistantOf(X,Y)
+	magic_Course_b(Y):-magic_TeachingAssistant_b(X), Person(X), teachingAssistantOf(X,Y)
 	magic_member_b(Y):-magic_Person_b(Y)
 	magic_degreeFrom_b(X):-magic_Person_b(X)
 	magic_hasAlumnus_b(Y):-magic_Person_b(Y)
@@ -287,14 +287,14 @@ Magic Program:
 	magic_TeachingAssistant_b(X):-magic_Person_b(X)
 	magic_Student_b(X):-magic_Person_b(X)
 	magic_Person_b(X):-magic_Student_b(X)
-	magic_Course_b(Y):-magic_Student_b(X), takesCourse(X,Y)
+	magic_Course_b(Y):-magic_Student_b(X), Person(X), takesCourse(X,Y)
 	magic_Person_b(X):-magic_Chair_b(X)
 	Boxminus[0.000000,5.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X)
 	Boxminus[0.000000,1.000000]magic_ResearchAssistantCandidate_b(X):-magic_ResearchAssistant_b(X), publicationAuthor(Y,X)
 	magic_Faculty_b(X):-magic_Employee_b(X)
 	magic_Person_b(X):-magic_Employee_b(X)
-	magic_worksFor_b(X):-magic_Employee_b(X)
-	magic_Organization_f:-magic_Employee_b(X)
+	magic_worksFor_b(X):-magic_Employee_b(X), Person(X)
+	magic_Organization_f:-magic_Employee_b(X), Person(X), worksFor(X,Y)
 	magic_member_ff:-magic_Organization_f
 	magic_University_f:-magic_Organization_f
 	magic_degreeFrom_ff:-magic_University_f

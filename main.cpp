@@ -5,6 +5,8 @@
 #include <fstream>
 #include <windows.h>
 #include <conio.h>
+#include <string>
+#include <filesystem>
 
 using namespace std;
 
@@ -220,77 +222,77 @@ void fileInputMode()
 	// File I/O Configurations
 	//std::ifstream inputFile("D:/Horizon/SJTU/Projects/ongoing/DatalogMTL-MagicSet-Transformer/test/input/input.txt"); // input file
 	//std::ofstream outputFile("D:/Horizon/SJTU/Projects/ongoing/DatalogMTL-MagicSet-Transformer/test/output/output.txt"); // output file
-	std::ifstream inputFile(filePath); // input file
-	std::ofstream outputFile(outputFilePath); // output file
+				std::ifstream inputFile(filePath); // input file
+				std::ofstream outputFile(outputFilePath); // output file
 
-	if (!inputFile.is_open()) // check if the input file is opened successfully
-	{
-		std::cerr << "Failed to open input file!" << std::endl;
-		return;
-	}
-	std::string line;
-	std::string query_string;
-	std::vector<std::string> rules_string;
+				if (!inputFile.is_open()) // check if the input file is opened successfully
+				{
+					std::cerr << "Failed to open input file!" << std::endl;
+					return;
+				}
+				std::string line;
+				std::string query_string;
+				std::vector<std::string> rules_string;
 
-	bool readingQuery = false;
-	bool readingRules = false;
+				bool readingQuery = false;
+				bool readingRules = false;
 
-	std::streambuf *original_cout_streambuf = std::cout.rdbuf(); // save cout buffer
-	std::cout.rdbuf(outputFile.rdbuf()); // redirect cout to output file
+				std::streambuf *original_cout_streambuf = std::cout.rdbuf(); // save cout buffer
+				std::cout.rdbuf(outputFile.rdbuf()); // redirect cout to output file
 
-	while (std::getline(inputFile, line))
-	{
-		if (line.find("query:") != std::string::npos)
-		{
-			readingQuery = true;
-			readingRules = false;
-			continue;
-		}
+				while (std::getline(inputFile, line))
+				{
+					if (line.find("query:") != std::string::npos)
+					{
+						readingQuery = true;
+						readingRules = false;
+						continue;
+					}
 
-		if (line.find("rules:") != std::string::npos)
-		{
-			readingQuery = false;
-			readingRules = true;
-			continue;
-		}
+					if (line.find("rules:") != std::string::npos)
+					{
+						readingQuery = false;
+						readingRules = true;
+						continue;
+					}
 
-		if (readingQuery)
-		{
-			query_string = line;
-		}
-		else if (readingRules)
-		{
-			rules_string.push_back(line);
-		}
-	}
+					if (readingQuery)
+					{
+						query_string = line;
+					}
+					else if (readingRules)
+					{
+						rules_string.push_back(line);
+					}
+				}
 
-	// use magic set method
-	MagicSet magicSet;
+				// use magic set method
+				MagicSet magicSet;
 
-	// in this premature version, we only parse the head of the rule as the query, note that the body is empty and we need :- to separate the head and the body
-	vector<string> querys; // input query
-	vector<Rule> queryList;
-	vector<string> rules; // input rules
-	vector<Rule> ruleList;
+				// in this premature version, we only parse the head of the rule as the query, note that the body is empty and we need :- to separate the head and the body
+				vector<string> querys; // input query
+				vector<Rule> queryList;
+				vector<string> rules; // input rules
+				vector<Rule> ruleList;
 
-	// Example from input file
-	querys.push_back(query_string); // input query here
-	for (const auto &rule : rules_string)
-	{
-		rules.push_back(rule); // input rules here
-	}
+				// Example from input file
+				querys.push_back(query_string); // input query here
+				for (const auto &rule : rules_string)
+				{
+					rules.push_back(rule); // input rules here
+				}
 
-	queryList = load_program(querys); // parse the query string
-	ruleList = load_program(rules);	  // parse the rule string
+				queryList = load_program(querys); // parse the query string
+				ruleList = load_program(rules);	  // parse the rule string
 
-	Literal query;
-	query = queryList[0].head;								// get the query
-	vector<Rule> magicRules = magicSet.MS(query, ruleList); // get the magic rules
+				Literal query;
+				query = queryList[0].head;								// get the query
+				vector<Rule> magicRules = magicSet.MS(query, ruleList); // get the magic rules
 
-	// Configuration of I/O
-	std::cout.rdbuf(original_cout_streambuf); // restore cout buffer
-	inputFile.close(); // close input file
-	outputFile.close(); // close output file
+				// Configuration of I/O
+				std::cout.rdbuf(original_cout_streambuf); // restore cout buffer
+				inputFile.close(); // close input file
+				outputFile.close(); // close output file
 
 	SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
 	std::cout << "Magic Set Transformation Done!" << std::endl;
@@ -298,6 +300,103 @@ void fileInputMode()
 	std::cout << "Please check the output file for the result." << std::endl;
 	std::cout << "Output file path: " << outputFilePath << std::endl;
 }
+
+/*
+void fileInputMode()
+{
+	std::filesystem::path inputDir = "D:\\code_for_self_learning\\DatalogMTL-MagicSet-Transformer\\test\\input";
+	std::filesystem::path outputDir = "D:\\code_for_self_learning\\DatalogMTL-MagicSet-Transformer\\test\\output";
+
+	int num = 0;
+
+	for (const auto& entry : std::filesystem::directory_iterator(inputDir)) {
+		if (entry.is_regular_file()) {
+			std::string fileName = entry.path().filename().string();
+			if (fileName.rfind("lubm_", 0) == 0 || fileName.rfind("iTemporal_", 0) == 0) {
+				num++;
+				std::filesystem::path filePath = entry.path();
+				std::filesystem::path outputFilePath = outputDir / fileName;
+
+				std::ifstream inputFile(filePath); // input file
+				std::ofstream outputFile(outputFilePath); // output file
+
+				if (!inputFile.is_open()) // check if the input file is opened successfully
+				{
+					std::cerr << "Failed to open input file!" << std::endl;
+					return;
+				}
+				std::string line;
+				std::string query_string;
+				std::vector<std::string> rules_string;
+
+				bool readingQuery = false;
+				bool readingRules = false;
+
+				std::streambuf* original_cout_streambuf = std::cout.rdbuf(); // save cout buffer
+				std::cout.rdbuf(outputFile.rdbuf()); // redirect cout to output file
+
+				while (std::getline(inputFile, line))
+				{
+					if (line.find("query:") != std::string::npos)
+					{
+						readingQuery = true;
+						readingRules = false;
+						continue;
+					}
+
+					if (line.find("rules:") != std::string::npos)
+					{
+						readingQuery = false;
+						readingRules = true;
+						continue;
+					}
+
+					if (readingQuery)
+					{
+						query_string = line;
+					}
+					else if (readingRules)
+					{
+						rules_string.push_back(line);
+					}
+				}
+
+				// use magic set method
+				MagicSet magicSet;
+
+				// in this premature version, we only parse the head of the rule as the query, note that the body is empty and we need :- to separate the head and the body
+				vector<string> querys; // input query
+				vector<Rule> queryList;
+				vector<string> rules; // input rules
+				vector<Rule> ruleList;
+
+				// Example from input file
+				querys.push_back(query_string); // input query here
+				for (const auto& rule : rules_string)
+				{
+					rules.push_back(rule); // input rules here
+				}
+
+				queryList = load_program(querys); // parse the query string
+				ruleList = load_program(rules);	  // parse the rule string
+
+				Literal query;
+				query = queryList[0].head;								// get the query
+				vector<Rule> magicRules = magicSet.MS(query, ruleList); // get the magic rules
+
+				// Configuration of I/O
+				std::cout.rdbuf(original_cout_streambuf); // restore cout buffer
+				inputFile.close(); // close input file
+				outputFile.close(); // close output file
+
+			}
+		}
+	}
+
+	SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_GREEN); // set title color to green
+	std::cout << "Magic Set Transformation Done!" << std::endl;
+	std::cout << "Handle " << num << " files" << std::endl;
+} */
 
 void test()
 {
