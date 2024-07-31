@@ -1,0 +1,3 @@
+Course(Y):-magic_Course_b(Y), teacherOf(X,Y)
+Course(Y):-magic_Course_b(Y), teachingAssistantOf(X,Y)
+Course(X):-magic_Course_b(X), GraduateCourse(X)

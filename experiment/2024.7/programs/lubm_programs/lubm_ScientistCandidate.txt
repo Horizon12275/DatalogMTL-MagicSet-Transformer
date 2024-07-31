@@ -1,0 +1,1 @@
+ScientistCandidate(X):-magic_ScientistCandidate_b(X), Diamondminus[1.000000,2.000000]doctoralDegreeFrom(X,Y)

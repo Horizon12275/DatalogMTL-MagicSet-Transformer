@@ -1,0 +1,39 @@
+Boxminus[1.000000,2.000000]magic_memberOf_b(X):-magic_SmartStudent_b(X)
+magic_GoodDepartment_f:-magic_SmartStudent_b(X), Diamondminus[1.000000,2.000000]memberOf(X,Y), UndergraduateStudent(X)
+Boxminus[1.000000,3.000000]magic_memberOf_b(X):-magic_SmartStudent_b(X)
+magic_GoodDepartment_f:-magic_SmartStudent_b(X), Diamondminus[1.000000,3.000000]memberOf(X,Y), GraduateStudent(X)
+Boxminus[0.000000,2.000000]magic_worksFor_ff:-magic_GoodDepartment_f
+magic_FullProfessor_f:-magic_GoodDepartment_f, Boxminus[0.000000,2.000000]worksFor(X,Y)
+Boxminus[0.000000,1.000000]magic_memberOf_ff:-magic_GoodDepartment_f
+Boxplus[0.000000,2.000000]magic_SmartStudent_f:-magic_GoodDepartment_f, Diamondminus[0.000000,1.000000]memberOf(X,Y)
+Boxminus[1.000000,2.000000]magic_memberOf_ff:-magic_SmartStudent_f
+magic_GoodDepartment_f:-magic_SmartStudent_f, Diamondminus[1.000000,2.000000]memberOf(X,Y), UndergraduateStudent(X)
+Boxminus[1.000000,3.000000]magic_memberOf_ff:-magic_SmartStudent_f
+magic_GoodDepartment_f:-magic_SmartStudent_f, Diamondminus[1.000000,3.000000]memberOf(X,Y), GraduateStudent(X)
+magic_member_ff:-magic_memberOf_ff
+magic_worksFor_ff:-magic_memberOf_ff
+magic_memberOf_ff:-magic_member_ff
+Boxminus[1.000000,2.000000]magic_Scientist_f:-magic_FullProfessor_f
+Boxminus[0.000000,4.000000]magic_ScientistCandidate_f:-magic_Scientist_f
+Boxminus[1.000000,2.000000]magic_FullProfessor_f:-magic_Scientist_f
+magic_member_b(X):-magic_memberOf_b(X)
+magic_worksFor_b(X):-magic_memberOf_b(X)
+magic_memberOf_b(Y):-magic_member_b(Y)
+SmartStudent(X):-magic_SmartStudent_b(X), Diamondminus[1.000000,2.000000]memberOf(X,Y), UndergraduateStudent(X), GoodDepartment(Y)
+SmartStudent(X):-magic_SmartStudent_b(X), Diamondminus[1.000000,3.000000]memberOf(X,Y), GraduateStudent(X), GoodDepartment(Y)
+GoodDepartment(Y):-magic_GoodDepartment_f, Boxminus[0.000000,2.000000]worksFor(X,Y), FullProfessor(X)
+GoodDepartment(Y):-magic_GoodDepartment_f, Diamondminus[0.000000,1.000000]memberOf(X,Y), Boxplus[0.000000,2.000000]SmartStudent(X)
+SmartStudent(X):-magic_SmartStudent_f, Diamondminus[1.000000,2.000000]memberOf(X,Y), UndergraduateStudent(X), GoodDepartment(Y)
+SmartStudent(X):-magic_SmartStudent_f, Diamondminus[1.000000,3.000000]memberOf(X,Y), GraduateStudent(X), GoodDepartment(Y)
+memberOf(X,Y):-magic_memberOf_ff, member(Y,X)
+memberOf(X,Y):-magic_memberOf_ff, worksFor(X,Y)
+worksFor(X,Y):-magic_worksFor_ff, headOf(X,Y)
+member(X,Y):-magic_member_ff, memberOf(Y,X)
+FullProfessor(X):-magic_FullProfessor_f, Diamondminus[1.000000,2.000000]Scientist(X)
+Scientist(X):-magic_Scientist_f, Boxminus[0.000000,4.000000]ScientistCandidate(X)
+Scientist(X):-magic_Scientist_f, Diamondminus[1.000000,2.000000]FullProfessor(X)
+ScientistCandidate(X):-magic_ScientistCandidate_f, Diamondminus[1.000000,2.000000]doctoralDegreeFrom(X,Y)
+memberOf(X,Y):-magic_memberOf_b(X), member(Y,X)
+memberOf(X,Y):-magic_memberOf_b(X), worksFor(X,Y)
+worksFor(X,Y):-magic_worksFor_b(X), headOf(X,Y)
+member(X,Y):-magic_member_b(Y), memberOf(Y,X)

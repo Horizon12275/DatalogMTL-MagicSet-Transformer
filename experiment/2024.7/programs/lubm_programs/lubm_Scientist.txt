@@ -1,0 +1,7 @@
+Boxminus[0.000000,4.000000]magic_ScientistCandidate_b(X):-magic_Scientist_b(X)
+Boxminus[1.000000,2.000000]magic_FullProfessor_b(X):-magic_Scientist_b(X)
+Boxminus[1.000000,2.000000]magic_Scientist_b(X):-magic_FullProfessor_b(X)
+Scientist(X):-magic_Scientist_b(X), Boxminus[0.000000,4.000000]ScientistCandidate(X)
+Scientist(X):-magic_Scientist_b(X), Diamondminus[1.000000,2.000000]FullProfessor(X)
+FullProfessor(X):-magic_FullProfessor_b(X), Diamondminus[1.000000,2.000000]Scientist(X)
+ScientistCandidate(X):-magic_ScientistCandidate_b(X), Diamondminus[1.000000,2.000000]doctoralDegreeFrom(X,Y)

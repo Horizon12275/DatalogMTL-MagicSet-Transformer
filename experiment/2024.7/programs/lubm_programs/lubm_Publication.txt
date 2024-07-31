@@ -1,0 +1,1 @@
+Publication(X):-magic_Publication_b(X), publicationAuthor(X,Y)

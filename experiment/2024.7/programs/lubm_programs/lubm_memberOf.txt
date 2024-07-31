@@ -1,0 +1,7 @@
+magic_member_bb(Y,X):-magic_memberOf_bb(X,Y)
+magic_worksFor_bb(X,Y):-magic_memberOf_bb(X,Y)
+magic_memberOf_bb(Y,X):-magic_member_bb(X,Y)
+memberOf(X,Y):-magic_memberOf_bb(X,Y), member(Y,X)
+memberOf(X,Y):-magic_memberOf_bb(X,Y), worksFor(X,Y)
+worksFor(X,Y):-magic_worksFor_bb(X,Y), headOf(X,Y)
+member(X,Y):-magic_member_bb(X,Y), memberOf(Y,X)

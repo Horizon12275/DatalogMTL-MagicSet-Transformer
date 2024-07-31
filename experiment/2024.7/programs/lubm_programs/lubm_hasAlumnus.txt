@@ -1,0 +1,7 @@
+magic_degreeFrom_bb(Y,X):-magic_hasAlumnus_bb(X,Y)
+magic_hasAlumnus_bb(Y,X):-magic_degreeFrom_bb(X,Y)
+hasAlumnus(X,Y):-magic_hasAlumnus_bb(X,Y), degreeFrom(Y,X)
+degreeFrom(X,Y):-magic_degreeFrom_bb(X,Y), hasAlumnus(Y,X)
+degreeFrom(X,Y):-magic_degreeFrom_bb(X,Y), doctoralDegreeFrom(X,Y)
+degreeFrom(X,Y):-magic_degreeFrom_bb(X,Y), mastersDegreeFrom(X,Y)
+degreeFrom(X,Y):-magic_degreeFrom_bb(X,Y), undergraduateDegreeFrom(X,Y)

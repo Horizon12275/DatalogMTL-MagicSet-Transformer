@@ -1,0 +1,1 @@
+worksFor(X,Y):-magic_worksFor_bb(X,Y), headOf(X,Y)
